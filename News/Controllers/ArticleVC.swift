@@ -41,7 +41,7 @@ class ArticleVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 25, height: view.height)
+        tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height)
     }
     
     //Setup navigation bar
@@ -61,7 +61,6 @@ class ArticleVC: UIViewController {
                 completion(false)
             case .success(let articles):
                 if let articles = articles {
-                    self.articleList = articles
                     self.articleListVM = ArticleListViewModel(articles: articles)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
