@@ -3,27 +3,87 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A817183FFBD439ED338FDB91 /* Pods_News.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DF4F2EF4751AFD0DAD177F /* Pods_News.framework */; };
+		B526194F2548221A00F54A31 /* ArticleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B526194E2548221A00F54A31 /* ArticleVC.swift */; };
+		B52619522548238A00F54A31 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619512548238A00F54A31 /* WebService.swift */; };
+		B52619552548241100F54A31 /* ShowArticleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619542548241100F54A31 /* ShowArticleVC.swift */; };
+		B526195A2548248200F54A31 /* ArticlesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619592548248200F54A31 /* ArticlesTableViewCell.swift */; };
+		B526195E254824A700F54A31 /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B526195D254824A700F54A31 /* CollectionTableViewCell.swift */; };
+		B52619612548254700F54A31 /* FeaturedArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619602548254700F54A31 /* FeaturedArticleTableViewCell.swift */; };
+		B52619642548256E00F54A31 /* TopicsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619632548256E00F54A31 /* TopicsCollectionViewCell.swift */; };
 		B56495BD2548142D0036934E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495BC2548142D0036934E /* AppDelegate.swift */; };
 		B56495BF2548142D0036934E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495BE2548142D0036934E /* SceneDelegate.swift */; };
-		B56495C12548142D0036934E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495C02548142D0036934E /* ViewController.swift */; };
 		B56495C42548142E0036934E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B56495C22548142E0036934E /* Main.storyboard */; };
 		B56495C6254814310036934E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B56495C5254814310036934E /* Assets.xcassets */; };
 		B56495C9254814310036934E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B56495C7254814310036934E /* LaunchScreen.storyboard */; };
+		B56495E425481A2E0036934E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495E325481A2E0036934E /* UIViewExtension.swift */; };
+		B56495E725481A6D0036934E /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495E625481A6D0036934E /* StringExtension.swift */; };
+		B56495EA25481AA40036934E /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495E925481AA40036934E /* Article.swift */; };
+		B564962D25481C580036934E /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564961B25481C540036934E /* SF-Pro-Display-BlackItalic.otf */; };
+		B564962E25481C580036934E /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564961C25481C540036934E /* SF-Pro-Display-Black.otf */; };
+		B564962F25481C580036934E /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564961D25481C540036934E /* SF-Pro-Display-Semibold.otf */; };
+		B564963025481C580036934E /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564961E25481C550036934E /* SF-Pro-Display-Regular.otf */; };
+		B564963125481C580036934E /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564961F25481C550036934E /* SF-Pro-Display-Thin.otf */; };
+		B564963225481C580036934E /* SF-Pro-Display-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962025481C550036934E /* SF-Pro-Display-LightItalic.otf */; };
+		B564963325481C580036934E /* SF-Pro-Display-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962125481C550036934E /* SF-Pro-Display-Ultralight.otf */; };
+		B564963425481C580036934E /* SF-Pro-Display-UltralightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962225481C560036934E /* SF-Pro-Display-UltralightItalic.otf */; };
+		B564963525481C580036934E /* SF-Pro-Display-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962325481C560036934E /* SF-Pro-Display-RegularItalic.otf */; };
+		B564963625481C580036934E /* SF-Pro-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962425481C560036934E /* SF-Pro-Display-Heavy.otf */; };
+		B564963725481C580036934E /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962525481C560036934E /* SF-Pro-Display-BoldItalic.otf */; };
+		B564963825481C580036934E /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962625481C560036934E /* SF-Pro-Display-Bold.otf */; };
+		B564963925481C580036934E /* SF-Pro-Display-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962725481C570036934E /* SF-Pro-Display-SemiboldItalic.otf */; };
+		B564963A25481C580036934E /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962825481C570036934E /* SF-Pro-Display-ThinItalic.otf */; };
+		B564963B25481C580036934E /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962925481C570036934E /* SF-Pro-Display-Medium.otf */; };
+		B564963C25481C580036934E /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962A25481C570036934E /* SF-Pro-Display-Light.otf */; };
+		B564963D25481C580036934E /* SF-Pro-Display-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962B25481C570036934E /* SF-Pro-Display-MediumItalic.otf */; };
+		B564963E25481C580036934E /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B564962C25481C580036934E /* SF-Pro-Display-HeavyItalic.otf */; };
+		B564964125481DCF0036934E /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B564964025481DCF0036934E /* ArticleViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1DE15F62D67C43DC022E1528 /* Pods-News.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-News.debug.xcconfig"; path = "Target Support Files/Pods-News/Pods-News.debug.xcconfig"; sourceTree = "<group>"; };
+		45EADFE16436C006915B5089 /* Pods-News.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-News.release.xcconfig"; path = "Target Support Files/Pods-News/Pods-News.release.xcconfig"; sourceTree = "<group>"; };
+		78DF4F2EF4751AFD0DAD177F /* Pods_News.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_News.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B526194E2548221A00F54A31 /* ArticleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleVC.swift; sourceTree = "<group>"; };
+		B52619512548238A00F54A31 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
+		B52619542548241100F54A31 /* ShowArticleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowArticleVC.swift; sourceTree = "<group>"; };
+		B52619592548248200F54A31 /* ArticlesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesTableViewCell.swift; sourceTree = "<group>"; };
+		B526195D254824A700F54A31 /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
+		B52619602548254700F54A31 /* FeaturedArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticleTableViewCell.swift; sourceTree = "<group>"; };
+		B52619632548256E00F54A31 /* TopicsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsCollectionViewCell.swift; sourceTree = "<group>"; };
 		B56495B92548142D0036934E /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B56495BC2548142D0036934E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B56495BE2548142D0036934E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B56495C02548142D0036934E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B56495C32548142E0036934E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B56495C5254814310036934E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B56495C8254814310036934E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B56495CA254814310036934E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B56495E325481A2E0036934E /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		B56495E625481A6D0036934E /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		B56495E925481AA40036934E /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		B564961B25481C540036934E /* SF-Pro-Display-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BlackItalic.otf"; sourceTree = "<group>"; };
+		B564961C25481C540036934E /* SF-Pro-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Black.otf"; sourceTree = "<group>"; };
+		B564961D25481C540036934E /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
+		B564961E25481C550036934E /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
+		B564961F25481C550036934E /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
+		B564962025481C550036934E /* SF-Pro-Display-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-LightItalic.otf"; sourceTree = "<group>"; };
+		B564962125481C550036934E /* SF-Pro-Display-Ultralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Ultralight.otf"; sourceTree = "<group>"; };
+		B564962225481C560036934E /* SF-Pro-Display-UltralightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-UltralightItalic.otf"; sourceTree = "<group>"; };
+		B564962325481C560036934E /* SF-Pro-Display-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-RegularItalic.otf"; sourceTree = "<group>"; };
+		B564962425481C560036934E /* SF-Pro-Display-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Heavy.otf"; sourceTree = "<group>"; };
+		B564962525481C560036934E /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
+		B564962625481C560036934E /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
+		B564962725481C570036934E /* SF-Pro-Display-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		B564962825481C570036934E /* SF-Pro-Display-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-ThinItalic.otf"; sourceTree = "<group>"; };
+		B564962925481C570036934E /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
+		B564962A25481C570036934E /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
+		B564962B25481C570036934E /* SF-Pro-Display-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-MediumItalic.otf"; sourceTree = "<group>"; };
+		B564962C25481C580036934E /* SF-Pro-Display-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-HeavyItalic.otf"; sourceTree = "<group>"; };
+		B564964025481DCF0036934E /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +91,55 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A817183FFBD439ED338FDB91 /* Pods_News.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F643BF7A133F6888500E5F0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1DE15F62D67C43DC022E1528 /* Pods-News.debug.xcconfig */,
+				45EADFE16436C006915B5089 /* Pods-News.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		575C1AF9AA631D4CE5D8C77B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78DF4F2EF4751AFD0DAD177F /* Pods_News.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B52619572548244700F54A31 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B52619632548256E00F54A31 /* TopicsCollectionViewCell.swift */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		B52619582548245000F54A31 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B52619592548248200F54A31 /* ArticlesTableViewCell.swift */,
+				B526195D254824A700F54A31 /* CollectionTableViewCell.swift */,
+				B52619602548254700F54A31 /* FeaturedArticleTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		B56495B02548142D0036934E = {
 			isa = PBXGroup;
 			children = (
 				B56495BB2548142D0036934E /* News */,
 				B56495BA2548142D0036934E /* Products */,
+				1F643BF7A133F6888500E5F0 /* Pods */,
+				575C1AF9AA631D4CE5D8C77B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,10 +154,12 @@
 		B56495BB2548142D0036934E /* News */ = {
 			isa = PBXGroup;
 			children = (
+				B56495EC25481ADA0036934E /* Fonts */,
+				B56495D4254817510036934E /* Extensions */,
 				B56495D9254817800036934E /* Sources */,
+				B56495DE254819BD0036934E /* Services */,
 				B56495D6254817600036934E /* ViewModels */,
 				B56495D52548175B0036934E /* Models */,
-				B56495D4254817510036934E /* Extensions */,
 				B56495D3254817450036934E /* Controllers */,
 				B56495D7254817670036934E /* View */,
 				B56495CA254814310036934E /* Info.plist */,
@@ -70,7 +170,8 @@
 		B56495D3254817450036934E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B56495C02548142D0036934E /* ViewController.swift */,
+				B526194E2548221A00F54A31 /* ArticleVC.swift */,
+				B52619542548241100F54A31 /* ShowArticleVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -78,6 +179,8 @@
 		B56495D4254817510036934E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B56495E325481A2E0036934E /* UIViewExtension.swift */,
+				B56495E625481A6D0036934E /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -85,6 +188,7 @@
 		B56495D52548175B0036934E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B56495E925481AA40036934E /* Article.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -92,6 +196,7 @@
 		B56495D6254817600036934E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B564964025481DCF0036934E /* ArticleViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -110,6 +215,8 @@
 		B56495D8254817760036934E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B52619582548245000F54A31 /* TableViewCell */,
+				B52619572548244700F54A31 /* CollectionViewCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -123,6 +230,39 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		B56495DE254819BD0036934E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B52619512548238A00F54A31 /* WebService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B56495EC25481ADA0036934E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B564961C25481C540036934E /* SF-Pro-Display-Black.otf */,
+				B564961B25481C540036934E /* SF-Pro-Display-BlackItalic.otf */,
+				B564962625481C560036934E /* SF-Pro-Display-Bold.otf */,
+				B564962525481C560036934E /* SF-Pro-Display-BoldItalic.otf */,
+				B564962425481C560036934E /* SF-Pro-Display-Heavy.otf */,
+				B564962C25481C580036934E /* SF-Pro-Display-HeavyItalic.otf */,
+				B564962A25481C570036934E /* SF-Pro-Display-Light.otf */,
+				B564962025481C550036934E /* SF-Pro-Display-LightItalic.otf */,
+				B564962925481C570036934E /* SF-Pro-Display-Medium.otf */,
+				B564962B25481C570036934E /* SF-Pro-Display-MediumItalic.otf */,
+				B564961E25481C550036934E /* SF-Pro-Display-Regular.otf */,
+				B564962325481C560036934E /* SF-Pro-Display-RegularItalic.otf */,
+				B564961D25481C540036934E /* SF-Pro-Display-Semibold.otf */,
+				B564962725481C570036934E /* SF-Pro-Display-SemiboldItalic.otf */,
+				B564961F25481C550036934E /* SF-Pro-Display-Thin.otf */,
+				B564962825481C570036934E /* SF-Pro-Display-ThinItalic.otf */,
+				B564962125481C550036934E /* SF-Pro-Display-Ultralight.otf */,
+				B564962225481C560036934E /* SF-Pro-Display-UltralightItalic.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -130,9 +270,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B56495CD254814310036934E /* Build configuration list for PBXNativeTarget "News" */;
 			buildPhases = (
+				6CD84D13BD270DF24ED4D60D /* [CP] Check Pods Manifest.lock */,
 				B56495B52548142D0036934E /* Sources */,
 				B56495B62548142D0036934E /* Frameworks */,
 				B56495B72548142D0036934E /* Resources */,
+				B28137EB0926F266ABF38153 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -180,21 +322,91 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B564963125481C580036934E /* SF-Pro-Display-Thin.otf in Resources */,
+				B564962F25481C580036934E /* SF-Pro-Display-Semibold.otf in Resources */,
+				B564963A25481C580036934E /* SF-Pro-Display-ThinItalic.otf in Resources */,
+				B564963725481C580036934E /* SF-Pro-Display-BoldItalic.otf in Resources */,
 				B56495C9254814310036934E /* LaunchScreen.storyboard in Resources */,
 				B56495C6254814310036934E /* Assets.xcassets in Resources */,
+				B564963B25481C580036934E /* SF-Pro-Display-Medium.otf in Resources */,
+				B564962E25481C580036934E /* SF-Pro-Display-Black.otf in Resources */,
 				B56495C42548142E0036934E /* Main.storyboard in Resources */,
+				B564963C25481C580036934E /* SF-Pro-Display-Light.otf in Resources */,
+				B564963025481C580036934E /* SF-Pro-Display-Regular.otf in Resources */,
+				B564963625481C580036934E /* SF-Pro-Display-Heavy.otf in Resources */,
+				B564963425481C580036934E /* SF-Pro-Display-UltralightItalic.otf in Resources */,
+				B564963525481C580036934E /* SF-Pro-Display-RegularItalic.otf in Resources */,
+				B564963825481C580036934E /* SF-Pro-Display-Bold.otf in Resources */,
+				B564963925481C580036934E /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
+				B564963E25481C580036934E /* SF-Pro-Display-HeavyItalic.otf in Resources */,
+				B564963D25481C580036934E /* SF-Pro-Display-MediumItalic.otf in Resources */,
+				B564963325481C580036934E /* SF-Pro-Display-Ultralight.otf in Resources */,
+				B564962D25481C580036934E /* SF-Pro-Display-BlackItalic.otf in Resources */,
+				B564963225481C580036934E /* SF-Pro-Display-LightItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6CD84D13BD270DF24ED4D60D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-News-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B28137EB0926F266ABF38153 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-News/Pods-News-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-News/Pods-News-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-News/Pods-News-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B56495B52548142D0036934E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B56495C12548142D0036934E /* ViewController.swift in Sources */,
+				B526195A2548248200F54A31 /* ArticlesTableViewCell.swift in Sources */,
 				B56495BD2548142D0036934E /* AppDelegate.swift in Sources */,
+				B52619552548241100F54A31 /* ShowArticleVC.swift in Sources */,
+				B56495EA25481AA40036934E /* Article.swift in Sources */,
+				B52619522548238A00F54A31 /* WebService.swift in Sources */,
+				B56495E725481A6D0036934E /* StringExtension.swift in Sources */,
+				B526195E254824A700F54A31 /* CollectionTableViewCell.swift in Sources */,
+				B526194F2548221A00F54A31 /* ArticleVC.swift in Sources */,
+				B52619642548256E00F54A31 /* TopicsCollectionViewCell.swift in Sources */,
+				B52619612548254700F54A31 /* FeaturedArticleTableViewCell.swift in Sources */,
+				B56495E425481A2E0036934E /* UIViewExtension.swift in Sources */,
+				B564964125481DCF0036934E /* ArticleViewModel.swift in Sources */,
 				B56495BF2548142D0036934E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +551,7 @@
 		};
 		B56495CE254814310036934E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DE15F62D67C43DC022E1528 /* Pods-News.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -358,6 +571,7 @@
 		};
 		B56495CF254814310036934E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45EADFE16436C006915B5089 /* Pods-News.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
