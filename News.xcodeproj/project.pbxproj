@@ -56,15 +56,71 @@
 		B56495BB2548142D0036934E /* News */ = {
 			isa = PBXGroup;
 			children = (
-				B56495BC2548142D0036934E /* AppDelegate.swift */,
-				B56495BE2548142D0036934E /* SceneDelegate.swift */,
-				B56495C02548142D0036934E /* ViewController.swift */,
-				B56495C22548142E0036934E /* Main.storyboard */,
-				B56495C5254814310036934E /* Assets.xcassets */,
-				B56495C7254814310036934E /* LaunchScreen.storyboard */,
+				B56495D9254817800036934E /* Sources */,
+				B56495D6254817600036934E /* ViewModels */,
+				B56495D52548175B0036934E /* Models */,
+				B56495D4254817510036934E /* Extensions */,
+				B56495D3254817450036934E /* Controllers */,
+				B56495D7254817670036934E /* View */,
 				B56495CA254814310036934E /* Info.plist */,
 			);
 			path = News;
+			sourceTree = "<group>";
+		};
+		B56495D3254817450036934E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B56495C02548142D0036934E /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B56495D4254817510036934E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B56495D52548175B0036934E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B56495D6254817600036934E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B56495D7254817670036934E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B56495D8254817760036934E /* Cells */,
+				B56495C7254814310036934E /* LaunchScreen.storyboard */,
+				B56495C22548142E0036934E /* Main.storyboard */,
+				B56495C5254814310036934E /* Assets.xcassets */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B56495D8254817760036934E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		B56495D9254817800036934E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B56495BC2548142D0036934E /* AppDelegate.swift */,
+				B56495BE2548142D0036934E /* SceneDelegate.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
