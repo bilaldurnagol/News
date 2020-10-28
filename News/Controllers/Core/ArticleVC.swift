@@ -44,6 +44,7 @@ class ArticleVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height - 10)
     }
     

@@ -25,8 +25,10 @@ class NetworkMonitor {
                 self?.isConnection = false
                 print("Not Connected!")
             }
+            print(path.isExpensive)
         }
     }
+    
     public func stopMonitoring() {
         monitor.cancel()
         print("cancel")
