@@ -25,7 +25,7 @@ class ShowArticleVC: UIViewController {
     }()
     
     private let readShareStackView: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 5.0
         stackView.distribution = .fillEqually
@@ -33,7 +33,7 @@ class ShowArticleVC: UIViewController {
     }()
     
     private let readStoryButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("READ FULL STORY", for: .normal)
         button.setTitleColor(UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1), for: .normal)
         button.layer.borderWidth = 1.0
@@ -44,7 +44,7 @@ class ShowArticleVC: UIViewController {
     }()
     
     private let shareStoryButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("SHARE", for: .normal)
         button.setTitleColor(UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1), for: .normal)
         button.layer.borderWidth = 1.0
@@ -75,6 +75,16 @@ class ShowArticleVC: UIViewController {
         return label
     }()
     
+    private let outerView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = false
+        view.layer.shadowColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1).cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = 20
+        return view
+    }()
+    
     private let articleImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -97,7 +107,7 @@ class ShowArticleVC: UIViewController {
         return label
     }()
     private var navBarTitle: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
         return label
     }()
@@ -106,13 +116,12 @@ class ShowArticleVC: UIViewController {
     
     init(model: Article) {
         super.init(nibName: nil, bundle: nil)
-        self.article = model
-        self.articleTitleLabel.text = model.title
-        self.articlePublishedAtLabel.text = model.publishedAt?.stringToPublishedAt()
-        self.articleImageView.sd_setImage(with: URL(string: model.urlToImage ?? ""), completed: nil)
-        self.articleContentLabel.attributedText = NSMutableAttributedString(string: model.description ?? "nill")
-        self.navBarTitle.text = model.source?.name
-       
+            self.article = model
+            self.articleTitleLabel.text = model.title
+            self.articlePublishedAtLabel.text = model.publishedAt?.stringToPublishedAt()
+            self.articleImageView.sd_setImage(with: URL(string: model.urlToImage ?? ""), completed: nil)
+            self.articleContentLabel.attributedText = NSMutableAttributedString(string: model.description ?? "nill")
+            self.navBarTitle.text = model.source?.name
     }
     
     required init?(coder: NSCoder) {
@@ -125,46 +134,49 @@ class ShowArticleVC: UIViewController {
         view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
         
         view.addSubview(scrollView)
+        outerView.addSubview(articleImageView)
         
         scrollView.addSubview(stackView)
-//        scrollView.addSubview(readShareStackView)
-        
         stackView.addArrangedSubview(articleTitleLabel)
         stackView.addArrangedSubview(articlePublishedAtLabel)
-        stackView.addArrangedSubview(articleImageView)
+        stackView.addArrangedSubview(outerView)
         stackView.addArrangedSubview(articleContentLabel)
         stackView.addArrangedSubview(readShareStackView)
         
         readShareStackView.addArrangedSubview(shareStoryButton)
         readShareStackView.addArrangedSubview(readStoryButton)
         
+        
         readStoryButton.addTarget(self, action: #selector(didTapReadButton), for: .touchUpInside)
         shareStoryButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
-
+        
+        
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+ 
         //Constrain scroll view
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
-        self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true;
-        self.scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true;
-        self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true;
-        self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true;
+        self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        self.scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
         //constrain stack view to scroll view
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true;
-        self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true;
-        self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true;
-        self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -10).isActive = true;
+        self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
+        self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
+        self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
+        self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -10).isActive = true
         
         //constrain width of stack view to width of self.view, NOT scroll view
-        self.stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true;
+        self.stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
         
         //Constraint articleTitleLabel
         self.articleTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.articleTitleLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 49).isActive = true
+        self.articleTitleLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 39).isActive = true
         self.articleTitleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 25).isActive = true
         self.articleTitleLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -25).isActive = true
         
@@ -173,28 +185,48 @@ class ShowArticleVC: UIViewController {
         self.articlePublishedAtLabel.topAnchor.constraint(equalTo: articleTitleLabel.bottomAnchor, constant: 10).isActive = true
         self.articlePublishedAtLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 25).isActive = true
         self.articlePublishedAtLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -25).isActive = true
-        self.articlePublishedAtLabel.bottomAnchor.constraint(equalTo: articlePublishedAtLabel.topAnchor, constant: 20).isActive = true;
+        self.articlePublishedAtLabel.bottomAnchor.constraint(equalTo: articlePublishedAtLabel.topAnchor, constant: 20).isActive = true
+        
+        // Constraint outerView
+        self.outerView.translatesAutoresizingMaskIntoConstraints = false
+        self.outerView.topAnchor.constraint(equalTo: articlePublishedAtLabel.bottomAnchor, constant: 30).isActive = true
+        self.outerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 25).isActive = true
+        self.outerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -25).isActive = true
+        self.outerView.bottomAnchor.constraint(equalTo: outerView.topAnchor, constant: 273).isActive = true
         
         // Constraint articleImageView
         self.articleImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.articleImageView.topAnchor.constraint(equalTo: articlePublishedAtLabel.bottomAnchor, constant: 30).isActive = true
-        self.articleImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 25).isActive = true
-        self.articleImageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -25).isActive = true
-        self.articleImageView.bottomAnchor.constraint(equalTo: articleImageView.topAnchor, constant: 273).isActive = true;
+        self.articleImageView.topAnchor.constraint(equalTo: outerView.topAnchor).isActive = true
+        self.articleImageView.leadingAnchor.constraint(equalTo: outerView.leadingAnchor).isActive = true
+        self.articleImageView.trailingAnchor.constraint(equalTo: outerView.trailingAnchor).isActive = true
+        self.articleImageView.bottomAnchor.constraint(equalTo: outerView.bottomAnchor).isActive = true
+        
+      
         
         // Constrain articleContentLabel
         self.articleContentLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.articleContentLabel.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: 40).isActive = true
+        self.articleContentLabel.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: 30).isActive = true
         self.articleContentLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 25).isActive = true
         self.articleContentLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -25).isActive = true
         
         
         //constrain stack view to scroll view
         self.readShareStackView.translatesAutoresizingMaskIntoConstraints = false
-        self.readShareStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 25).isActive = true;
-        self.readShareStackView.topAnchor.constraint(equalTo: self.articleContentLabel.bottomAnchor, constant: 40).isActive = true;
-        self.readShareStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -25).isActive = true;
-        self.readShareStackView.bottomAnchor.constraint(equalTo: self.readShareStackView.topAnchor, constant: 50).isActive = true;
+        self.readShareStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 25).isActive = true
+        self.readShareStackView.topAnchor.constraint(equalTo: self.articleContentLabel.bottomAnchor, constant: 40).isActive = true
+        self.readShareStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -25).isActive = true
+        self.readShareStackView.bottomAnchor.constraint(equalTo: self.readShareStackView.topAnchor, constant: 50).isActive = true
+        
+       
+        outerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
+                                                               y: articleImageView.bottom,
+                                                               width: outerView.width,
+                                                               height: 10)).cgPath
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
     }
     

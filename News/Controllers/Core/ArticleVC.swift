@@ -43,13 +43,13 @@ class ArticleVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height)
+        tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height - 10)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if NetworkMonitor.shared.isConnection == true {
-            print("bağlandı")
+            
         } else {
             let vc = ConnectionControlVC()
             vc.modalPresentationStyle = .fullScreen
