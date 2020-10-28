@@ -24,7 +24,7 @@ class ArticlesTableViewCell: UITableViewCell {
     let articleTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Lunch Break angels swing above mmters passing"
-        label.font = UIFont(name: "SFProDisplay-Medium", size: 18)
+        label.font = UIFont(name: "SFCompactDisplay-Medium", size: 18)
         label.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
         label.backgroundColor = .clear
         label.textAlignment = .left
@@ -35,7 +35,7 @@ class ArticlesTableViewCell: UITableViewCell {
     private let articlePublishedAtLabel: UILabel = {
         let label = UILabel()
         label.text = "2 Min read | 26 oct"
-        label.font = UIFont(name: "SFProDisplay-Regular", size: 16)
+        label.font = UIFont(name: "SFCompactDisplay-Light", size: 16)
         label.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
         label.backgroundColor = .clear
         label.textAlignment = .left
@@ -83,3 +83,17 @@ class ArticlesTableViewCell: UITableViewCell {
     }
     
 }
+
+
+/*
+SF Compact Display
+== SFCompactDisplay-Regular
+== SFCompactDisplay-Ultralight
+== SFCompactDisplay-Thin
+== SFCompactDisplay-Light
+== SFCompactDisplay-Medium
+== SFCompactDisplay-Semibold
+== SFCompactDisplay-Bold
+== SFCompactDisplay-Heavy
+== SFCompactDisplay-Black
+*/

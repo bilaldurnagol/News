@@ -6,23 +6,15 @@
 	<string>Uygulama galerinize erişmek istiyor</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SF-Pro-Display-Black.otf</string>
-		<string>SF-Pro-Display-Black.otf</string>
-		<string>SF-Pro-Display-Bold.otf</string>
-		<string>SF-Pro-Display-BoldItalic.otf</string>
-		<string>SF-Pro-Display-Heavy.otf</string>
-		<string>SF-Pro-Display-Light.otf</string>
-		<string>SF-Pro-Display-LightItalic.otf</string>
-		<string>SF-Pro-Display-Medium.otf</string>
-		<string>SF-Pro-Display-MediumItalic.otf</string>
-		<string>SF-Pro-Display-Regular.otf</string>
-		<string>SF-Pro-Display-RegularItalic.otf</string>
-		<string>SF-Pro-Display-Semibold.otf</string>
-		<string>SF-Pro-Display-SemiboldItalic.otf</string>
-		<string>SF-Pro-Display-Thin.otf</string>
-		<string>SF-Pro-Display-ThinItalic.otf</string>
-		<string>SF-Pro-Display-Ultralight.otf</string>
-		<string>SF-Pro-Display-UltralightItalic.otf</string>
+		<string>SF-Compact-Display-Black.otf</string>
+		<string>SF-Compact-Display-Bold.otf</string>
+		<string>SF-Compact-Display-Heavy.otf</string>
+		<string>SF-Compact-Display-Light.otf</string>
+		<string>SF-Compact-Display-Medium.otf</string>
+		<string>SF-Compact-Display-Regular.otf</string>
+		<string>SF-Compact-Display-Semibold.otf</string>
+		<string>SF-Compact-Display-Thin.otf</string>
+		<string>SF-Compact-Display-Ultralight.otf</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

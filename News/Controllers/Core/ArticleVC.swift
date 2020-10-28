@@ -24,6 +24,7 @@ class ArticleVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupNavBar()
         view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
         
@@ -167,12 +168,12 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             let view = UIView()
             view.sizeToFit()
             view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
-            let titleLabel = UILabel(frame: CGRect(x: 0, y: 52, width: 250, height: 91))
+            let titleLabel = UILabel(frame: CGRect(x: 0, y: 42, width: 250, height: 91))
             titleLabel.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
             titleLabel.text = "Choose your \ntopics"
             titleLabel.textAlignment = .left
             titleLabel.numberOfLines = 0
-            titleLabel.font = UIFont(name: "SFProDisplay-Medium", size: 38)
+            titleLabel.font = UIFont(name: "SFCompactDisplay-Medium", size: 38)
             titleLabel.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
             view.addSubview(titleLabel)
             return view
@@ -184,7 +185,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 20))
             titleLabel.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
             titleLabel.text = "Featured Article"
-            titleLabel.font = UIFont(name: "SFProDisplay-Regular", size: 20)
+            titleLabel.font = UIFont(name: "SFCompactDisplay-Light", size: 20)
             titleLabel.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
             view.addSubview(titleLabel)
             return view
@@ -195,7 +196,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 20))
             titleLabel.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
             titleLabel.text = "For you"
-            titleLabel.font = UIFont(name: "SFProDisplay-Regular", size: 20)
+            titleLabel.font = UIFont(name: "SFCompactDisplay-Light", size: 20)
             titleLabel.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
             view.addSubview(titleLabel)
             return view
@@ -213,28 +214,15 @@ extension ArticleVC: CollectionTableViewCellDelegate {
     }
     
 }
-
-
-
-
-
-
-
-//
-//SF Pro Display
-//SFProDisplay-Regular
-//SFProDisplay-RegularItalic
-//SFProDisplay-Ultralight
-//SFProDisplay-UltralightItalic
-//SFProDisplay-Thin
-//SFProDisplay-ThinItalic
-//SFProDisplay-Light
-//SFProDisplay-LightItalic
-//SFProDisplay-Medium
-//SFProDisplay-MediumItalic
-//SFProDisplay-Semibold
-//SFProDisplay-SemiboldItalic
-//SFProDisplay-Bold
-//SFProDisplay-BoldItalic
-//SFProDisplay-Heavy
-//SFProDisplay-Black
+/*
+SF Compact Display
+== SFCompactDisplay-Regular
+== SFCompactDisplay-Ultralight
+== SFCompactDisplay-Thin
+== SFCompactDisplay-Light
+== SFCompactDisplay-Medium
+== SFCompactDisplay-Semibold
+== SFCompactDisplay-Bold
+== SFCompactDisplay-Heavy
+== SFCompactDisplay-Black
+*/
