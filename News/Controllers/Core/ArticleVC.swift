@@ -26,13 +26,15 @@ class ArticleVC: UIViewController {
         super.viewDidLoad()
         setupNavBar()
         view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
+        
         view.addSubview(tableView)
-        tableView.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
         guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=tr&apiKey=a9ca5d6857f34469b1ab44452a983acc")else {return}
+        
         getArticles(with: url, completion: {success in
             if success {print("OK!")}
             else {print("Fail!")}
@@ -42,6 +44,17 @@ class ArticleVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if NetworkMonitor.shared.isConnection == true {
+            print("bağlandı")
+        } else {
+            let vc = ConnectionControlVC()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: false)
+        }
     }
     
     //Setup navigation bar
@@ -54,6 +67,7 @@ class ArticleVC: UIViewController {
     }
     
     private func getArticles(with url: URL, completion: @escaping (Bool) -> ()) {
+        
         WebService.shared.getArticles(url: url, completion: {result in
             switch result {
             case .failure(let error):
@@ -187,7 +201,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             return view
         }
     }
-
+    
 }
 
 extension ArticleVC: CollectionTableViewCellDelegate {

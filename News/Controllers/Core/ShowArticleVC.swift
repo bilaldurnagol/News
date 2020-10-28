@@ -38,6 +38,7 @@ class ShowArticleVC: UIViewController {
         button.setTitleColor(UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1), for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.borderColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1).cgColor
+        button.layer.cornerRadius = 8.0
         button.sizeToFit()
         return button
     }()
@@ -46,8 +47,11 @@ class ShowArticleVC: UIViewController {
        let button = UIButton()
         button.setTitle("SHARE", for: .normal)
         button.setTitleColor(UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1), for: .normal)
+        button.layer.borderWidth = 1.0
+        button.layer.borderColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1).cgColor
         button.sizeToFit()
         button.backgroundColor = .systemGreen
+        button.layer.cornerRadius = 8.0
         return button
     }()
     
@@ -123,12 +127,13 @@ class ShowArticleVC: UIViewController {
         view.addSubview(scrollView)
         
         scrollView.addSubview(stackView)
-        scrollView.addSubview(readShareStackView)
+//        scrollView.addSubview(readShareStackView)
         
         stackView.addArrangedSubview(articleTitleLabel)
         stackView.addArrangedSubview(articlePublishedAtLabel)
         stackView.addArrangedSubview(articleImageView)
         stackView.addArrangedSubview(articleContentLabel)
+        stackView.addArrangedSubview(readShareStackView)
         
         readShareStackView.addArrangedSubview(shareStoryButton)
         readShareStackView.addArrangedSubview(readStoryButton)
@@ -152,7 +157,7 @@ class ShowArticleVC: UIViewController {
         self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true;
         self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true;
         self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true;
-        self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor).isActive = true;
+        self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -10).isActive = true;
         
         //constrain width of stack view to width of self.view, NOT scroll view
         self.stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true;
@@ -187,7 +192,7 @@ class ShowArticleVC: UIViewController {
         //constrain stack view to scroll view
         self.readShareStackView.translatesAutoresizingMaskIntoConstraints = false
         self.readShareStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 25).isActive = true;
-        self.readShareStackView.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 40).isActive = true;
+        self.readShareStackView.topAnchor.constraint(equalTo: self.articleContentLabel.bottomAnchor, constant: 40).isActive = true;
         self.readShareStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -25).isActive = true;
         self.readShareStackView.bottomAnchor.constraint(equalTo: self.readShareStackView.topAnchor, constant: 50).isActive = true;
         
@@ -219,7 +224,10 @@ class ShowArticleVC: UIViewController {
     //Read more func
     @objc private func didTapReadButton() {
         guard let url = URL(string:article?.url ?? "https://www.google.com") else {return}
-        let vc = SFSafariViewController(url: url)
+        let config = SFSafariViewController.Configuration()
+        //open safari reader mode, if it is available
+        config.entersReaderIfAvailable = true
+        let vc = SFSafariViewController(url: url, configuration: config)
         present(vc, animated: true)
     }
     
