@@ -25,7 +25,6 @@ class NetworkMonitor {
                 self?.isConnection = false
                 print("Not Connected!")
             }
-            print(path.isExpensive)
         }
     }
     
