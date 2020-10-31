@@ -120,7 +120,7 @@ class ShowArticleVC: UIViewController {
             self.articleTitleLabel.text = model.title
             self.articlePublishedAtLabel.text = model.publishedAt?.stringToPublishedAt()
             self.articleImageView.sd_setImage(with: URL(string: model.urlToImage ?? ""), completed: nil)
-            self.articleContentLabel.attributedText = NSMutableAttributedString(string: model.description ?? "nill")
+            self.articleContentLabel.attributedText = NSMutableAttributedString(string: model.description ?? "nil")
             self.navBarTitle.text = model.source?.name
     }
     
@@ -130,6 +130,7 @@ class ShowArticleVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNavBar()
         view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
         
@@ -145,7 +146,6 @@ class ShowArticleVC: UIViewController {
         
         readShareStackView.addArrangedSubview(shareStoryButton)
         readShareStackView.addArrangedSubview(readStoryButton)
-        
         
         readStoryButton.addTarget(self, action: #selector(didTapReadButton), for: .touchUpInside)
         shareStoryButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
@@ -217,7 +217,7 @@ class ShowArticleVC: UIViewController {
         self.readShareStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -25).isActive = true
         self.readShareStackView.bottomAnchor.constraint(equalTo: self.readShareStackView.topAnchor, constant: 50).isActive = true
         
-       
+       //shadow imageview
         outerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
                                                                y: articleImageView.bottom,
                                                                width: outerView.width,

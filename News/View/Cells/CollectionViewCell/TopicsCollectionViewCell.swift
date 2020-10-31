@@ -17,6 +17,7 @@ class TopicsCollectionViewCell: UICollectionViewCell {
     var topicArticleList: [Article]?
     var delegate: TopicsCollectionViewCellDelegate?
     var topicArticleListVM: ArticleListViewModel!
+    private let regionCode = UserDefaults.standard.value(forKey: "regionCode")
     
     let topicButton: UIButton = {
         let button = UIButton()
@@ -71,7 +72,11 @@ class TopicsCollectionViewCell: UICollectionViewCell {
         guard let topic = topicButton.titleLabel?.text else {
             return
         }
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=tr&category=\(topic.lowercased())&apiKey=a9ca5d6857f34469b1ab44452a983acc") else {
+        
+        guard let safeRegionCode = regionCode else {
+            return
+        }
+        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(safeRegionCode)&category=\(topic.lowercased())&apiKey=a9ca5d6857f34469b1ab44452a983acc") else {
             return
         }
         

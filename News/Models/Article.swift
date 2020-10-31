@@ -30,5 +30,5 @@ struct Source: Decodable, Any {
 
 
 struct Topics {
-    let category: String
+    var topicArray: [String]
 }

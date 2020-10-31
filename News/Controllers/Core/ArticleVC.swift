@@ -10,7 +10,8 @@ import UIKit
 class ArticleVC: UIViewController {
     
     private var articleList: [Article]?
-    private var topicArray:[String] = ["General", "Business", "Entertainment", "Health", "Science", "Sports", "Technology"]
+    private var topicArray = UserDefaults.standard.value(forKey: "chooseTopics")
+    private let regionCode = UserDefaults.standard.value(forKey: "regionCode")
     private var articleListVM: ArticleListViewModel!
     
     private let tableView: UITableView = {
@@ -24,17 +25,18 @@ class ArticleVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupNavBar()
         view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
-        
         view.addSubview(tableView)
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=tr&apiKey=a9ca5d6857f34469b1ab44452a983acc")else {return}
+        guard let safeRegionCode = regionCode else {
+            return
+        }
+    
+        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(safeRegionCode)&apiKey=a9ca5d6857f34469b1ab44452a983acc")else {return}
         
         getArticles(with: url, completion: {success in
             if success {print("OK!")}
@@ -47,15 +49,23 @@ class ArticleVC: UIViewController {
         
         tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height - 10)
     }
-    
+  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //Check internet
         if NetworkMonitor.shared.isConnection == true {
             
         } else {
             let vc = ConnectionControlVC()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
+        }
+        //Check isnewuser for onboarding
+        
+        if WelcomeOnBoarding.shared.isNewUser() {
+            let vc = WelcomeOnboardingVC()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
         }
     }
     
@@ -87,7 +97,11 @@ class ArticleVC: UIViewController {
             
         })
     }
+
 }
+
+
+//MARK: - Tableview configure
 extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     
     
@@ -112,7 +126,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier,
                                                      for: indexPath) as! CollectionTableViewCell
-            cell.configure(topics: topicArray)
+            cell.configure(topics: topicArray as! [String])
             cell.delegate = self
             return cell
         }else if indexPath.section == 1 {

@@ -26,7 +26,6 @@ extension ArticleListViewModel {
         let article = articles[index]
         return article
     }
-    
 }
 
 struct ArticleViewModel {
