@@ -17,6 +17,7 @@
 		B526195E254824A700F54A31 /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B526195D254824A700F54A31 /* CollectionTableViewCell.swift */; };
 		B52619612548254700F54A31 /* FeaturedArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619602548254700F54A31 /* FeaturedArticleTableViewCell.swift */; };
 		B52619642548256E00F54A31 /* TopicsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619632548256E00F54A31 /* TopicsCollectionViewCell.swift */; };
+		B5503472254FE85100B4D597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5503471254FE85100B4D597 /* GoogleService-Info.plist */; };
 		B56495BD2548142D0036934E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495BC2548142D0036934E /* AppDelegate.swift */; };
 		B56495BF2548142D0036934E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495BE2548142D0036934E /* SceneDelegate.swift */; };
 		B56495C42548142E0036934E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B56495C22548142E0036934E /* Main.storyboard */; };
@@ -53,6 +54,7 @@
 		B526195D254824A700F54A31 /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
 		B52619602548254700F54A31 /* FeaturedArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticleTableViewCell.swift; sourceTree = "<group>"; };
 		B52619632548256E00F54A31 /* TopicsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsCollectionViewCell.swift; sourceTree = "<group>"; };
+		B5503471254FE85100B4D597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B56495B92548142D0036934E /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B56495BC2548142D0036934E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B56495BE2548142D0036934E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				B56495D3254817450036934E /* Controllers */,
 				B56495D7254817670036934E /* View */,
 				B56495CA254814310036934E /* Info.plist */,
+				B5503471254FE85100B4D597 /* GoogleService-Info.plist */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5503472254FE85100B4D597 /* GoogleService-Info.plist in Resources */,
 				B5B88A1025497ACF00813D38 /* SF-Compact-Display-Thin.otf in Resources */,
 				B5B88A1525497ACF00813D38 /* SF-Compact-Display-Heavy.otf in Resources */,
 				B56495C9254814310036934E /* LaunchScreen.storyboard in Resources */,

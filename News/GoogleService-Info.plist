@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>341821303410-5p6cobnkdn7hleegv5pmffhdp2a80fpj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.341821303410-5p6cobnkdn7hleegv5pmffhdp2a80fpj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCZevrGbPZ5pY_LA2Sfqe-IawGXozCe7dw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>341821303410</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bilaldurnagol.News</string>
+	<key>PROJECT_ID</key>
+	<string>newapp-b095b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>newapp-b095b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:341821303410:ios:5b5a3684c2493d2b0130eb</string>
+	<key>DATABASE_URL</key>
+	<string>https://newapp-b095b.firebaseio.com</string>
+</dict>
+</plist>

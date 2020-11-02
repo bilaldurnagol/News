@@ -9,4 +9,8 @@ target 'News' do
 
 pod 'SDWebImage'
 
+# add the Firebase pod for Google Analytics and Database
+pod 'Firebase/Analytics'
+pod 'Firebase/Database'
+
 end
