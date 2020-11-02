@@ -13,6 +13,7 @@ class ArticleVC: UIViewController {
     private var topicArray = UserDefaults.standard.value(forKey: "chooseTopics")
     private let regionCode = UserDefaults.standard.value(forKey: "regionCode")
     private var articleListVM: ArticleListViewModel!
+    private var featuredArticle: [String: Any]?
     
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -67,6 +68,16 @@ class ArticleVC: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
+        
+        DatabaseManager.shared.getFeaturedArticle(completion: {result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case.success(let featuredArticle):
+                self.featuredArticle = featuredArticle
+            }
+        })
+        
     }
     
     //Setup navigation bar
@@ -88,6 +99,18 @@ class ArticleVC: UIViewController {
             case .success(let articles):
                 if let articles = articles {
                     self.articleListVM = ArticleListViewModel(articles: articles)
+                    DatabaseManager.shared.isExistArticle(with: articles, completion: {exist in
+                        if !exist {
+                            DatabaseManager.shared.addArticle(with: articles, completion: {success in
+                                if success {
+                                    print("added")
+                                } else {
+                                    print("failed")
+                                }
+                            })
+                        }
+                        
+                    })
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -130,10 +153,9 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             return cell
         }else if indexPath.section == 1 {
-            let articleVM = articleListVM.articleAtIndex(0)
             let cell = tableView.dequeueReusableCell(withIdentifier: FeaturedArticleTableViewCell.identifier,
                                                      for: indexPath) as! FeaturedArticleTableViewCell
-            cell.configure(article: articleVM)
+            cell.configure(article: self.featuredArticle ?? ["Nil": "nil"])
             return cell
             
         } else {

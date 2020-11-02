@@ -87,6 +87,10 @@ class TopicsCollectionViewCell: UICollectionViewCell {
             case .success(let articles):
                 if let articles = articles {
                     self.topicArticleListVM = ArticleListViewModel(articles: articles)
+                    DatabaseManager.shared.isExistArticle(with: articles, completion: {exist in
+                        
+                        
+                    })
                     if let delegate = self.delegate {
                         delegate.chooseTopic(articles: self.topicArticleListVM!)
                     }
