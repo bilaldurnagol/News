@@ -8,8 +8,11 @@
 import UIKit
 import SafariServices
 import SDWebImage
+import FirebaseFirestore
 
 class ShowArticleVC: UIViewController {
+    
+   private let db = Firestore.firestore()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -112,16 +115,19 @@ class ShowArticleVC: UIViewController {
         return label
     }()
     
-    private var article: Article?
+    var articleURL: String?
+    var urlToImage: String?
     
-    init(model: Article) {
+    init(title: String, publishedAt: String, urlToImage: String, description: String, navBarTitle: String, articleURL: String ) {
         super.init(nibName: nil, bundle: nil)
-            self.article = model
-            self.articleTitleLabel.text = model.title
-            self.articlePublishedAtLabel.text = model.publishedAt?.stringToPublishedAt()
-            self.articleImageView.sd_setImage(with: URL(string: model.urlToImage ?? ""), completed: nil)
-            self.articleContentLabel.attributedText = NSMutableAttributedString(string: model.description ?? "nil")
-            self.navBarTitle.text = model.source?.name
+        self.articleTitleLabel.text = title
+        self.articlePublishedAtLabel.text = publishedAt.stringToPublishedAt()
+        self.articleImageView.sd_setImage(with: URL(string: urlToImage), completed: nil)
+        self.articleContentLabel.attributedText = NSMutableAttributedString(string: description)
+        self.navBarTitle.text = navBarTitle
+        self.articleURL = articleURL
+        self.urlToImage = urlToImage
+        readCounter(articleURL: articleURL)
     }
     
     required init?(coder: NSCoder) {
@@ -149,6 +155,7 @@ class ShowArticleVC: UIViewController {
         
         readStoryButton.addTarget(self, action: #selector(didTapReadButton), for: .touchUpInside)
         shareStoryButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
+        
         
         
         
@@ -224,12 +231,7 @@ class ShowArticleVC: UIViewController {
                                                                height: 10)).cgPath
         
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
+
     //Setup navigation bar
     private func setupNavBar() {
         
@@ -250,12 +252,16 @@ class ShowArticleVC: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)]
     }
     
+    func safeArticleURL(articleURL: String) -> String {
+        let safeURL = articleURL.replacingOccurrences(of: "/", with: "_")
+        return safeURL
+    }
     @objc private func didTapXmarkButton() {
         dismiss(animated: true, completion: nil)
     }
     //Read more func
     @objc private func didTapReadButton() {
-        guard let url = URL(string:article?.url ?? "https://www.google.com") else {return}
+        guard let url = URL(string:self.articleURL ?? "https://www.google.com") else {return}
         let config = SFSafariViewController.Configuration()
         //open safari reader mode, if it is available
         config.entersReaderIfAvailable = true
@@ -266,14 +272,30 @@ class ShowArticleVC: UIViewController {
     //Share func
     @objc private func didTapShareButton() {
         let imageView = UIImageView()
-        guard let imageURL = URL(string: article?.urlToImage ?? "bell"),
-              let shareURL = URL(string: article?.url ?? "https://www.google.com") else {return}
+        guard let imageURL = URL(string: self.urlToImage ?? "bell"),
+              let shareURL = URL(string: self.articleURL ?? "https://www.google.com") else {return}
         imageView.sd_setImage(with: imageURL, completed: nil)
         guard let shareImage = imageView.image else {return}
         let shareSheetVC = UIActivityViewController(activityItems: [shareImage, shareURL], applicationActivities: nil)
         present(shareSheetVC, animated: true)
     }
     
+}
+//MARK: - Database funcs
+extension ShowArticleVC {
+    
+    private func readCounter(articleURL: String) {
+        db.collection("articlesURL").document(safeArticleURL(articleURL: articleURL)).getDocument(completion: {document, error in
+            if let document = document, document.exists {
+                guard let count = document["readCounter"] as? Int else {
+                    return
+                }
+                let newCount = count + 1
+                self.db.collection("articlesURL").document(self.safeArticleURL(articleURL: articleURL)).updateData(["readCounter": newCount])
+                  
+               }
+        })
+    }
 }
 
 /*

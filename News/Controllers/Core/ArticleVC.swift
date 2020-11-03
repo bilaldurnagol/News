@@ -169,11 +169,42 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let articleVM = articleListVM.articleAtIndex(indexPath.row)
-        let vc = ShowArticleVC(model: articleVM)
-        let nav = UINavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        if indexPath.section == 1 {
+            guard let title = featuredArticle?["title"],
+                  let publishedAt = featuredArticle?["publishedAt"],
+                  let urlToImage = featuredArticle?["urlToImage"],
+                  let description = featuredArticle?["description"],
+                  let navBarTitle = featuredArticle?["name"],
+                  let articleURL = featuredArticle?["url"] else {
+                return
+            }
+            
+            let vc = ShowArticleVC(title: title as! String, publishedAt: publishedAt as! String, urlToImage: urlToImage as! String, description: description as! String, navBarTitle: navBarTitle as! String, articleURL: articleURL as! String)
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true)
+            
+        }else {
+            let articleVM = articleListVM.articleAtIndex(indexPath.row)
+            let title = articleVM.title!
+            let publishedAt = articleVM.publishedAt!
+            let urlToImage = articleVM.urlToImage!
+            let description = articleVM.description!
+            let navBarTitle = articleVM.source?.name ?? "News"
+            let articleURL = articleVM.url!
+            
+            let vc = ShowArticleVC(title: title,
+                                   publishedAt: publishedAt,
+                                   urlToImage: urlToImage,
+                                   description: description,
+                                   navBarTitle: navBarTitle,
+                                   articleURL: articleURL)
+            
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true)
+        }
+     
     }
     
     

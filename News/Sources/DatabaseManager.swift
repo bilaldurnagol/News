@@ -45,11 +45,12 @@ extension DatabaseManager {
             let articleURL = article.url!
             let safeURL = safeArticleURL(articleURL: articleURL)
             
-            let data = ["title": article.title!,
-                        "publishedAt": article.publishedAt!,
-                        "urlToImage": article.urlToImage!,
-                        "description": article.description!,
+            let data = ["title": article.title,
+                        "publishedAt": article.publishedAt,
+                        "urlToImage": article.urlToImage,
+                        "description": article.description,
                         "name": article.source?.name ?? "News",
+                        "url": article.url,
                         "readCounter": 0] as [String: Any]
             
             db.collection("articlesURL").document(safeURL).setData(data, merge: true, completion: {error in
@@ -75,12 +76,12 @@ extension DatabaseManager {
                     guard let readCount = document.get("readCounter") as? Int else {
                         return
                     }
-                    if readCount > maxRead {
+                    if readCount >= maxRead {
                         maxRead = readCount
                         featuredArticle = document.data()
                     }
                 }
-                completion(.success(featuredArticle!))
+                completion(.success(featuredArticle ?? ["":""]))
             }
         })
     }
