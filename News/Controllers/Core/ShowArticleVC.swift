@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class ShowArticleVC: UIViewController {
     
-   private let db = Firestore.firestore()
+    private let db = Firestore.firestore()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -163,7 +163,7 @@ class ShowArticleVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
- 
+        
         //Constrain scroll view
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
@@ -208,7 +208,7 @@ class ShowArticleVC: UIViewController {
         self.articleImageView.trailingAnchor.constraint(equalTo: outerView.trailingAnchor).isActive = true
         self.articleImageView.bottomAnchor.constraint(equalTo: outerView.bottomAnchor).isActive = true
         
-      
+        
         
         // Constrain articleContentLabel
         self.articleContentLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -224,14 +224,14 @@ class ShowArticleVC: UIViewController {
         self.readShareStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -25).isActive = true
         self.readShareStackView.bottomAnchor.constraint(equalTo: self.readShareStackView.topAnchor, constant: 50).isActive = true
         
-       //shadow imageview
+        //shadow imageview
         outerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
                                                                y: articleImageView.bottom,
                                                                width: outerView.width,
                                                                height: 10)).cgPath
         
     }
-
+    
     //Setup navigation bar
     private func setupNavBar() {
         
@@ -252,13 +252,10 @@ class ShowArticleVC: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)]
     }
     
-    func safeArticleURL(articleURL: String) -> String {
-        let safeURL = articleURL.replacingOccurrences(of: "/", with: "_")
-        return safeURL
-    }
     @objc private func didTapXmarkButton() {
         dismiss(animated: true, completion: nil)
     }
+    
     //Read more func
     @objc private func didTapReadButton() {
         guard let url = URL(string:self.articleURL ?? "https://www.google.com") else {return}
@@ -285,28 +282,28 @@ class ShowArticleVC: UIViewController {
 extension ShowArticleVC {
     
     private func readCounter(articleURL: String) {
-        db.collection("articlesURL").document(safeArticleURL(articleURL: articleURL)).getDocument(completion: {document, error in
+        db.collection("articlesURL").document(articleURL.safeURL()).getDocument(completion: {document, error in
             if let document = document, document.exists {
                 guard let count = document["readCounter"] as? Int else {
                     return
                 }
                 let newCount = count + 1
-                self.db.collection("articlesURL").document(self.safeArticleURL(articleURL: articleURL)).updateData(["readCounter": newCount])
-                  
-               }
+                self.db.collection("articlesURL").document(articleURL.safeURL()).updateData(["readCounter": newCount])
+                
+            }
         })
     }
 }
 
 /*
-SF Compact Display
-== SFCompactDisplay-Regular
-== SFCompactDisplay-Ultralight
-== SFCompactDisplay-Thin
-== SFCompactDisplay-Light
-== SFCompactDisplay-Medium
-== SFCompactDisplay-Semibold
-== SFCompactDisplay-Bold
-== SFCompactDisplay-Heavy
-== SFCompactDisplay-Black
-*/
+ SF Compact Display
+ == SFCompactDisplay-Regular
+ == SFCompactDisplay-Ultralight
+ == SFCompactDisplay-Thin
+ == SFCompactDisplay-Light
+ == SFCompactDisplay-Medium
+ == SFCompactDisplay-Semibold
+ == SFCompactDisplay-Bold
+ == SFCompactDisplay-Heavy
+ == SFCompactDisplay-Black
+ */

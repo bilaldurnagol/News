@@ -12,24 +12,20 @@ import FirebaseFirestore
 class DatabaseManager {
     static let shared = DatabaseManager()
     private let db = Firestore.firestore()
-    
-    func safeArticleURL(articleURL: String) -> String {
-        let safeURL = articleURL.replacingOccurrences(of: "/", with: "_")
-        return safeURL
-    }
-    
-    
 }
 
 extension DatabaseManager {
     
     public func isExistArticle(with articles: [Article], completion: @escaping (Bool) -> ()) {
         
-        for arcticle in articles {
-            let safeURL = safeArticleURL(articleURL: arcticle.url!)
-            db.collection("articlesURL").document(safeURL).getDocument(completion: { document, error in
+        for article in articles {
+            
+            guard let articleURL = article.url else {
+                return
+            }
+            db.collection("articlesURL").document((articleURL.safeURL())).getDocument(completion: { document, error in
                 if let document = document, document.exists {
-                    print(document.get("readCounter"))
+                    print(document.get("readCounter")!)
                     completion(true)
                 } else {
                     
@@ -43,22 +39,29 @@ extension DatabaseManager {
     public func addArticle(with articles: [Article], completion: @escaping (Bool) ->()) {
         for article in articles {
             let articleURL = article.url!
-            let safeURL = safeArticleURL(articleURL: articleURL)
             
-            let data = ["title": article.title,
-                        "publishedAt": article.publishedAt,
-                        "urlToImage": article.urlToImage,
-                        "description": article.description,
-                        "name": article.source?.name ?? "News",
-                        "url": article.url,
-                        "readCounter": 0] as [String: Any]
+            guard let title = article.title,
+                  let publishedAt = article.publishedAt,
+                  let urlToImage = article.urlToImage,
+                  let description = article.description,
+                  let name = article.source?.name,
+                  let url = article.url else {
+                return
+            }
+            let data:[String: Any] = ["title": title,
+                                      "publishedAt": publishedAt,
+                                      "urlToImage": urlToImage,
+                                      "description": description,
+                                      "name": name,
+                                      "url": url,
+                                      "readCounter": 0]
             
-            db.collection("articlesURL").document(safeURL).setData(data, merge: true, completion: {error in
+            db.collection("articlesURL").document(articleURL.safeURL()).setData(data, merge: true, completion: {error in
                 if error == nil {
                     print("OK! Added articleURL")
                     completion(true)
                 } else {
-                    print("\(error?.localizedDescription)")
+                    print(DatabaseError.failedToSet)
                     completion(false)
                 }
             })
@@ -100,5 +103,6 @@ extension DatabaseManager {
     //Errors
     enum DatabaseError: Error {
         case failedToFetch
+        case failedToSet
     }
 }
