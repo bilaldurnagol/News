@@ -170,28 +170,37 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 1 {
-            guard let title = featuredArticle?["title"],
-                  let publishedAt = featuredArticle?["publishedAt"],
-                  let urlToImage = featuredArticle?["urlToImage"],
-                  let description = featuredArticle?["description"],
-                  let navBarTitle = featuredArticle?["name"],
-                  let articleURL = featuredArticle?["url"] else {
+            guard let title = featuredArticle?["title"] as? String,
+                  let publishedAt = featuredArticle?["publishedAt"] as? String,
+                  let urlToImage = featuredArticle?["urlToImage"] as? String,
+                  let description = featuredArticle?["description"] as? String,
+                  let navBarTitle = featuredArticle?["name"] as? String,
+                  let articleURL = featuredArticle?["url"] as? String else {
                 return
             }
             
-            let vc = ShowArticleVC(title: title as! String, publishedAt: publishedAt as! String, urlToImage: urlToImage as! String, description: description as! String, navBarTitle: navBarTitle as! String, articleURL: articleURL as! String)
+            let vc = ShowArticleVC(title: title,
+                                   publishedAt: publishedAt,
+                                   urlToImage: urlToImage,
+                                   description: description,
+                                   navBarTitle: navBarTitle,
+                                   articleURL: articleURL)
+            
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
             
         }else {
             let articleVM = articleListVM.articleAtIndex(indexPath.row)
-            let title = articleVM.title!
-            let publishedAt = articleVM.publishedAt!
-            let urlToImage = articleVM.urlToImage!
-            let description = articleVM.description!
-            let navBarTitle = articleVM.source?.name ?? "News"
-            let articleURL = articleVM.url!
+            guard let title = articleVM.title ?? "News",
+                  let publishedAt = articleVM.publishedAt ?? "",
+                  let urlToImage = articleVM.urlToImage ?? "",
+                  let description = articleVM.description ?? "",
+                  let navBarTitle = articleVM.source?.name ?? "",
+                  let articleURL = articleVM.url ?? "" else {
+                return
+            }
+            
             
             let vc = ShowArticleVC(title: title,
                                    publishedAt: publishedAt,

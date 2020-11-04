@@ -14,6 +14,12 @@ extension String {
         return safeURL
     }
     
+    func safeURLImage() -> String {
+       let parts = self.split(separator: ";")
+        let safeURL = parts[0]
+        return String(safeURL)
+    }
+    
     func stringToPublishedAt() -> String {
         let dateFormatter = DateFormatter()
         let tempLocale = dateFormatter.locale

@@ -122,7 +122,11 @@ class ShowArticleVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.articleTitleLabel.text = title
         self.articlePublishedAtLabel.text = publishedAt.stringToPublishedAt()
-        self.articleImageView.sd_setImage(with: URL(string: urlToImage), completed: nil)
+        if urlToImage == nil {
+            self.articleImageView.image = UIImage(named: "newsLogo")
+        }else {
+            self.articleImageView.sd_setImage(with: URL(string: urlToImage), completed: nil)
+        }
         self.articleContentLabel.attributedText = NSMutableAttributedString(string: description)
         self.navBarTitle.text = navBarTitle
         self.articleURL = articleURL
@@ -266,11 +270,12 @@ class ShowArticleVC: UIViewController {
         present(vc, animated: true)
     }
     
-    //Share func
+    //Share button func
     @objc private func didTapShareButton() {
         let imageView = UIImageView()
-        guard let imageURL = URL(string: self.urlToImage ?? "bell"),
+        guard let imageURL = URL(string: self.urlToImage ?? ""),
               let shareURL = URL(string: self.articleURL ?? "https://www.google.com") else {return}
+        
         imageView.sd_setImage(with: imageURL, completed: nil)
         guard let shareImage = imageView.image else {return}
         let shareSheetVC = UIActivityViewController(activityItems: [shareImage, shareURL], applicationActivities: nil)

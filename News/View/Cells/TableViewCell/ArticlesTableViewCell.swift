@@ -79,7 +79,13 @@ class ArticlesTableViewCell: UITableViewCell {
     public func configure(article: Article) {
         articleTitleLabel.text = article.title
         articlePublishedAtLabel.text = article.publishedAt?.stringToPublishedAt()
-        articleImageView.sd_setImage(with: URL(string: article.urlToImage ?? ""), completed: nil)
+        
+        if article.urlToImage == nil {
+            articleImageView.image = UIImage(named: "newsLogo")
+        }else {
+            articleImageView.sd_setImage(with: URL(string: article.urlToImage ?? ""), completed: nil)
+        }
+     
     }
     
 }
