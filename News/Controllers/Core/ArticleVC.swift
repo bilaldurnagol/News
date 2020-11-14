@@ -192,12 +192,12 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             
         }else {
             let articleVM = articleListVM.articleAtIndex(indexPath.row)
-            guard let title = articleVM.title ?? "News",
-                  let publishedAt = articleVM.publishedAt ?? "",
-                  let urlToImage = articleVM.urlToImage ?? "",
-                  let description = articleVM.description ?? "",
-                  let navBarTitle = articleVM.source?.name ?? "",
-                  let articleURL = articleVM.url ?? "" else {
+            guard let title = articleVM.title,
+                  let publishedAt = articleVM.publishedAt,
+                  let urlToImage = articleVM.urlToImage,
+                  let description = articleVM.description,
+                  let navBarTitle = articleVM.source?.name,
+                  let articleURL = articleVM.url else {
                 return
             }
             
