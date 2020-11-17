@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Pbw-Xy-lej">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Pbw-Xy-lej">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,7 +43,7 @@
         <!--Navigation Controller-->
         <scene sceneID="TAt-Da-flQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pbw-Xy-lej" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ArticleVCNavigation" automaticallyAdjustsScrollViewInsets="NO" id="Pbw-Xy-lej" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RhL-Z9-2SP">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -61,7 +61,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ssM-yk-zs1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BXq-Eh-xrB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ShowArticleVCNavigation" automaticallyAdjustsScrollViewInsets="NO" id="BXq-Eh-xrB" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Hu4-Hr-1LV">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

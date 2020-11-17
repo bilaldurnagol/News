@@ -28,7 +28,7 @@
 		B56495E725481A6D0036934E /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495E625481A6D0036934E /* StringExtension.swift */; };
 		B56495EA25481AA40036934E /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495E925481AA40036934E /* Article.swift */; };
 		B564964125481DCF0036934E /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B564964025481DCF0036934E /* ArticleViewModel.swift */; };
-		B589AAB0254BEB6600A9D5C3 /* WelcomeOnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589AAAF254BEB6600A9D5C3 /* WelcomeOnboardingVC.swift */; };
+		B56C2E242563FAC00056BB53 /* WelcomeOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56C2E232563FAC00056BB53 /* WelcomeOnboarding.swift */; };
 		B589AAB4254C057800A9D5C3 /* OnboardingTopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589AAB3254C057800A9D5C3 /* OnboardingTopicCollectionViewCell.swift */; };
 		B5A66606254AE5F3003D16B3 /* WelcomeOnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A66605254AE5F3003D16B3 /* WelcomeOnBoarding.swift */; };
 		B5B88A0D25497ACF00813D38 /* SF-Compact-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0425497ACE00813D38 /* SF-Compact-Display-Black.otf */; };
@@ -68,7 +68,7 @@
 		B56495E625481A6D0036934E /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		B56495E925481AA40036934E /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		B564964025481DCF0036934E /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
-		B589AAAF254BEB6600A9D5C3 /* WelcomeOnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnboardingVC.swift; sourceTree = "<group>"; };
+		B56C2E232563FAC00056BB53 /* WelcomeOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnboarding.swift; sourceTree = "<group>"; };
 		B589AAB3254C057800A9D5C3 /* OnboardingTopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5A66605254AE5F3003D16B3 /* WelcomeOnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnBoarding.swift; sourceTree = "<group>"; };
 		B5B88A0425497ACE00813D38 /* SF-Compact-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Black.otf"; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				B5A45BE4254AD63000B1CE42 /* Login_Register */,
-				B589AAAF254BEB6600A9D5C3 /* WelcomeOnboardingVC.swift */,
+				B56C2E232563FAC00056BB53 /* WelcomeOnboarding.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -422,7 +422,7 @@
 				B51381822548667A00D7A6FB /* ConnectionControlVC.swift in Sources */,
 				B51381852548677C00D7A6FB /* NetworkMonitor.swift in Sources */,
 				B526195E254824A700F54A31 /* CollectionTableViewCell.swift in Sources */,
-				B589AAB0254BEB6600A9D5C3 /* WelcomeOnboardingVC.swift in Sources */,
+				B56C2E242563FAC00056BB53 /* WelcomeOnboarding.swift in Sources */,
 				B5A66606254AE5F3003D16B3 /* WelcomeOnBoarding.swift in Sources */,
 				B526194F2548221A00F54A31 /* ArticleVC.swift in Sources */,
 				B52619642548256E00F54A31 /* TopicsCollectionViewCell.swift in Sources */,
@@ -508,7 +508,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -563,7 +563,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
