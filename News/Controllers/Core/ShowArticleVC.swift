@@ -159,8 +159,6 @@ class ShowArticleVC: UIViewController {
         readStoryButton.addTarget(self, action: #selector(didTapReadButton), for: .touchUpInside)
         shareStoryButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
         
-        print("article ID: \(articleID)")
-        
         readCounter()
         
         
@@ -298,6 +296,7 @@ extension ShowArticleVC {
             return
         }
         URLSession.shared.dataTask(with: url).resume()
+        
     }
 }
 

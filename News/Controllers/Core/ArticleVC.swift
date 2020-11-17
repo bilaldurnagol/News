@@ -33,19 +33,8 @@ class ArticleVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        guard let safeRegionCode = regionCode else {
-            return
-        }
+
         
-        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/general")else {return}
-        
-        DispatchQueue.main.async {
-            self.getArticles(with: url, completion: {success in
-                if success {print("OK!")}
-                else {print("Fail!")}
-            })
-            self.getFeaturedArticle()
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -71,8 +60,17 @@ class ArticleVC: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
-        
-        
+        guard let regionCode = regionCode else {
+            return
+        }
+        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
+        DispatchQueue.main.async {
+            self.getArticles(with: url, completion: {success in
+                if success {print("OK!")}
+                else {print("Fail!")}
+            })
+        self.getFeaturedArticle()
+        }
     }
     
     //Setup navigation bar
@@ -124,6 +122,9 @@ class ArticleVC: UIViewController {
                 print(error)
             case .success(let featuredArticle):
                 self.featuredArticle = featuredArticle
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         })
         
@@ -165,7 +166,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: FeaturedArticleTableViewCell.identifier,
                                                      for: indexPath) as! FeaturedArticleTableViewCell
             cell.configure(article: featuredArticle)
-            
             return cell
             
         } else {
