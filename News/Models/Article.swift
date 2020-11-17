@@ -15,17 +15,22 @@ struct ArticleList: Decodable {
 struct Article: Decodable {
     let source: Source?
     let author: String?
-    var title: String?
-    let description: String?
-    let url: String?
-    let urlToImage: String?
-    let publishedAt: String?
+    let category: String?
     let content: String?
+    let country: String?
+    let description: String?
+    let id: Int?
+    let published_at: String?
+    let read_count: Int?
+    let title: String?
+    let url: String?
+    let url_to_image: String?
+
 }
 
 struct Source: Decodable, Any {
-    let id: String?
-    let name: String?
+    let source_id: String?
+    let source_name: String?
 }
 
 

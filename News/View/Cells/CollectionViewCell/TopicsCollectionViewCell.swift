@@ -76,7 +76,7 @@ class TopicsCollectionViewCell: UICollectionViewCell {
         guard let safeRegionCode = regionCode else {
             return
         }
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(safeRegionCode)&category=\(topic.lowercased())&apiKey=a9ca5d6857f34469b1ab44452a983acc") else {
+        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/\(topic.lowercased())") else {
             return
         }
         

@@ -41,10 +41,10 @@ extension DatabaseManager {
             let articleURL = article.url!
             
             guard let title = article.title,
-                  let publishedAt = article.publishedAt,
-                  let urlToImage = article.urlToImage,
+                  let publishedAt = article.published_at,
+                  let urlToImage = article.url_to_image,
                   let description = article.description,
-                  let name = article.source?.name,
+                  let name = article.source?.source_name,
                   let url = article.url else {
                 return
             }

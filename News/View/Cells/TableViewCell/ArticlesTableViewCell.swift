@@ -78,12 +78,12 @@ class ArticlesTableViewCell: UITableViewCell {
     
     public func configure(article: Article) {
         articleTitleLabel.text = article.title
-        articlePublishedAtLabel.text = article.publishedAt?.stringToPublishedAt()
+        articlePublishedAtLabel.text = article.published_at
         
-        if article.urlToImage == nil {
+        if article.url_to_image == nil {
             articleImageView.image = UIImage(named: "newsLogo")
         }else {
-            articleImageView.sd_setImage(with: URL(string: article.urlToImage ?? ""), completed: nil)
+            articleImageView.sd_setImage(with: URL(string: article.url_to_image ?? ""), completed: nil)
         }
      
     }

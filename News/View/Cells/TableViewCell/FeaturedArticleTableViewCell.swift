@@ -92,14 +92,11 @@ class FeaturedArticleTableViewCell: UITableViewCell {
         
     }
     
-    func configure(article: [String: Any]) {
-        let publishedAt: String?
-        publishedAt = article["publishedAt"] as? String
-        let safePublishedAt = publishedAt?.stringToPublishedAt()
-        self.featuredArticleTitleLabel.text = article["title"] as? String
-        let urlToImage = article["urlToImage"] as? String
+    func configure(article: Article) {
+        self.featuredArticleTitleLabel.text = article.title
+        let urlToImage = article.url_to_image
         self.featuredArticleImageView.sd_setImage(with: URL(string:urlToImage ?? "url"), completed: nil)
-        self.featuredArticlePublishedAtLabel.text = safePublishedAt
+        self.featuredArticlePublishedAtLabel.text = article.published_at
 
     }
     

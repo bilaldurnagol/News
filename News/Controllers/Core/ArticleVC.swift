@@ -13,7 +13,7 @@ class ArticleVC: UIViewController {
     private var topicArray = UserDefaults.standard.value(forKey: "chooseTopics")
     private let regionCode = UserDefaults.standard.value(forKey: "regionCode")
     private var articleListVM: ArticleListViewModel!
-    private var featuredArticle: [String: Any]?
+    private var featuredArticle: [Article]?
     
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -36,13 +36,16 @@ class ArticleVC: UIViewController {
         guard let safeRegionCode = regionCode else {
             return
         }
-    
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(safeRegionCode)&apiKey=a9ca5d6857f34469b1ab44452a983acc")else {return}
         
-        getArticles(with: url, completion: {success in
-            if success {print("OK!")}
-            else {print("Fail!")}
-        })
+        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/general")else {return}
+        
+        DispatchQueue.main.async {
+            self.getArticles(with: url, completion: {success in
+                if success {print("OK!")}
+                else {print("Fail!")}
+            })
+            self.getFeaturedArticle()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,7 +53,7 @@ class ArticleVC: UIViewController {
         
         tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height - 10)
     }
-  
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Check internet
@@ -69,14 +72,6 @@ class ArticleVC: UIViewController {
             present(vc, animated: true)
         }
         
-        DatabaseManager.shared.getFeaturedArticle(completion: {result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case.success(let featuredArticle):
-                self.featuredArticle = featuredArticle
-            }
-        })
         
     }
     
@@ -120,7 +115,20 @@ class ArticleVC: UIViewController {
             
         })
     }
-
+    private func getFeaturedArticle() {
+        let urlString = "http://127.0.0.1:5000/featured_article"
+        guard let url = URL(string: urlString) else { return }
+        WebService.shared.getArticles(url: url, completion: {result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let featuredArticle):
+                self.featuredArticle = featuredArticle
+            }
+        })
+        
+    }
+    
 }
 
 
@@ -153,9 +161,11 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             return cell
         }else if indexPath.section == 1 {
+            let featuredArticle = self.featuredArticle![indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: FeaturedArticleTableViewCell.identifier,
                                                      for: indexPath) as! FeaturedArticleTableViewCell
-            cell.configure(article: self.featuredArticle ?? ["Nil": "nil"])
+            cell.configure(article: featuredArticle)
+            
             return cell
             
         } else {
@@ -170,50 +180,21 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 1 {
-            guard let title = featuredArticle?["title"] as? String,
-                  let publishedAt = featuredArticle?["publishedAt"] as? String,
-                  let urlToImage = featuredArticle?["urlToImage"] as? String,
-                  let description = featuredArticle?["description"] as? String,
-                  let navBarTitle = featuredArticle?["name"] as? String,
-                  let articleURL = featuredArticle?["url"] as? String else {
-                return
-            }
-            
-            let vc = ShowArticleVC(title: title,
-                                   publishedAt: publishedAt,
-                                   urlToImage: urlToImage,
-                                   description: description,
-                                   navBarTitle: navBarTitle,
-                                   articleURL: articleURL)
-            
+            let featuredArticle = self.featuredArticle![indexPath.row]
+            let vc = ShowArticleVC(article: featuredArticle)
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
             
+            
         }else {
             let articleVM = articleListVM.articleAtIndex(indexPath.row)
-            guard let title = articleVM.title,
-                  let publishedAt = articleVM.publishedAt,
-                  let urlToImage = articleVM.urlToImage,
-                  let description = articleVM.description,
-                  let navBarTitle = articleVM.source?.name,
-                  let articleURL = articleVM.url else {
-                return
-            }
-            
-            
-            let vc = ShowArticleVC(title: title,
-                                   publishedAt: publishedAt,
-                                   urlToImage: urlToImage,
-                                   description: description,
-                                   navBarTitle: navBarTitle,
-                                   articleURL: articleURL)
-            
+            let vc = ShowArticleVC(article: articleVM)
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
         }
-     
+        
     }
     
     
@@ -279,7 +260,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             return view
         }
     }
-    
 }
 
 extension ArticleVC: CollectionTableViewCellDelegate {
@@ -292,14 +272,14 @@ extension ArticleVC: CollectionTableViewCellDelegate {
     
 }
 /*
-SF Compact Display
-== SFCompactDisplay-Regular
-== SFCompactDisplay-Ultralight
-== SFCompactDisplay-Thin
-== SFCompactDisplay-Light
-== SFCompactDisplay-Medium
-== SFCompactDisplay-Semibold
-== SFCompactDisplay-Bold
-== SFCompactDisplay-Heavy
-== SFCompactDisplay-Black
-*/
+ SF Compact Display
+ == SFCompactDisplay-Regular
+ == SFCompactDisplay-Ultralight
+ == SFCompactDisplay-Thin
+ == SFCompactDisplay-Light
+ == SFCompactDisplay-Medium
+ == SFCompactDisplay-Semibold
+ == SFCompactDisplay-Bold
+ == SFCompactDisplay-Heavy
+ == SFCompactDisplay-Black
+ */

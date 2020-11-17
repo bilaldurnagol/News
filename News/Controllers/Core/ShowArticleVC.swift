@@ -117,21 +117,20 @@ class ShowArticleVC: UIViewController {
     
     var articleURL: String?
     var urlToImage: String?
+    var articleID: Int?
+    var articleCount: Int?
     
-    init(title: String, publishedAt: String, urlToImage: String, description: String, navBarTitle: String, articleURL: String ) {
+    init(article: Article ) {
         super.init(nibName: nil, bundle: nil)
-        self.articleTitleLabel.text = title
-        self.articlePublishedAtLabel.text = publishedAt.stringToPublishedAt()
-        if urlToImage == nil {
-            self.articleImageView.image = UIImage(named: "newsLogo")
-        }else {
-            self.articleImageView.sd_setImage(with: URL(string: urlToImage), completed: nil)
-        }
-        self.articleContentLabel.attributedText = NSMutableAttributedString(string: description)
-        self.navBarTitle.text = navBarTitle
-        self.articleURL = articleURL
-        self.urlToImage = urlToImage
-        readCounter(articleURL: articleURL)
+        self.articleTitleLabel.text = article.title
+        self.articlePublishedAtLabel.text = article.published_at
+        self.articleImageView.sd_setImage(with: URL(string: article.url_to_image!), completed: nil)
+        self.articleContentLabel.attributedText = NSMutableAttributedString(string: article.description ?? "No content")
+        self.navBarTitle.text = article.source?.source_name
+        self.articleURL = article.url
+        self.urlToImage = article.url_to_image
+        self.articleID = article.id!
+        self.articleCount = article.read_count
     }
     
     required init?(coder: NSCoder) {
@@ -159,6 +158,10 @@ class ShowArticleVC: UIViewController {
         
         readStoryButton.addTarget(self, action: #selector(didTapReadButton), for: .touchUpInside)
         shareStoryButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
+        
+        print("article ID: \(articleID)")
+        
+        readCounter()
         
         
         
@@ -286,17 +289,15 @@ class ShowArticleVC: UIViewController {
 //MARK: - Database funcs
 extension ShowArticleVC {
     
-    private func readCounter(articleURL: String) {
-        db.collection("articlesURL").document(articleURL.safeURL()).getDocument(completion: {document, error in
-            if let document = document, document.exists {
-                guard let count = document["readCounter"] as? Int else {
-                    return
-                }
-                let newCount = count + 1
-                self.db.collection("articlesURL").document(articleURL.safeURL()).updateData(["readCounter": newCount])
-                
-            }
-        })
+    private func readCounter() {
+        guard let articleID = self.articleID else {
+            return
+        }
+        let stringURL = "http://127.0.0.1:5000/article/\(articleID)"
+        guard  let url = URL(string: stringURL) else {
+            return
+        }
+        URLSession.shared.dataTask(with: url).resume()
     }
 }
 
