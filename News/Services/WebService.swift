@@ -21,7 +21,6 @@ extension WebService {
                 return
             }
             let articles = try? JSONDecoder().decode(ArticleList.self, from: data)
-            
             completion(.success(articles?.articles))
         }).resume()
     }

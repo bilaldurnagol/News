@@ -33,7 +33,19 @@ class ArticleVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-
+        
+        guard let regionCode = regionCode else {
+            return
+        }
+        
+        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
+        DispatchQueue.main.async {
+            self.getArticles(with: url, completion: {success in
+                if success {print("OK!")}
+                else {print("Fail!")}
+            })
+        }
+        
         
     }
     
@@ -56,21 +68,13 @@ class ArticleVC: UIViewController {
         //Check isnewuser for onboarding
         
         if WelcomeOnBoarding.shared.isNewUser() {
-            let vc = WelcomeOnboardingVC()
+            let vc = WelcomeOnboarding()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
-        guard let regionCode = regionCode else {
-            return
-        }
-        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
-        DispatchQueue.main.async {
-            self.getArticles(with: url, completion: {success in
-                if success {print("OK!")}
-                else {print("Fail!")}
-            })
+        
+        //get feateured article. auto update in tableview
         self.getFeaturedArticle()
-        }
     }
     
     //Setup navigation bar
@@ -83,7 +87,6 @@ class ArticleVC: UIViewController {
     }
     
     private func getArticles(with url: URL, completion: @escaping (Bool) -> ()) {
-        
         WebService.shared.getArticles(url: url, completion: {result in
             switch result {
             case .failure(let error):
@@ -92,18 +95,6 @@ class ArticleVC: UIViewController {
             case .success(let articles):
                 if let articles = articles {
                     self.articleListVM = ArticleListViewModel(articles: articles)
-                    DatabaseManager.shared.isExistArticle(with: articles, completion: {exist in
-                        if !exist {
-                            DatabaseManager.shared.addArticle(with: articles, completion: {success in
-                                if success {
-                                    print("added")
-                                } else {
-                                    print("failed")
-                                }
-                            })
-                        }
-                        
-                    })
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }

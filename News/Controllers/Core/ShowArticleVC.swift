@@ -8,11 +8,8 @@
 import UIKit
 import SafariServices
 import SDWebImage
-import FirebaseFirestore
 
 class ShowArticleVC: UIViewController {
-    
-    private let db = Firestore.firestore()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
