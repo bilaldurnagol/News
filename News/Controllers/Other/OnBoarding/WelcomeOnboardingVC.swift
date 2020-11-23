@@ -142,9 +142,9 @@ class WelcomeOnboardingVC: UIViewController, UICollectionViewDelegate, UICollect
                 button.setTitleColor(.white, for: .normal)
                 button.backgroundColor = UIColor(red: 79/255, green: 68/255, blue: 255/255, alpha: 1)
                 button.layer.cornerRadius = 25.0
-                button.setTitle("Continue", for: .normal)
+                button.setTitle("Devam", for: .normal)
                 if i == 3 {
-                    button.setTitle("Get Started", for: .normal)
+                    button.setTitle("Giriş Yap", for: .normal)
                 }
                 button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
                 button.tag = i+1

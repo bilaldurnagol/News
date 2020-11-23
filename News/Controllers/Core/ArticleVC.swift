@@ -67,6 +67,12 @@ class ArticleVC: UIViewController {
             present(vc, animated: false)
         }
         //Check isnewuser for onboarding
+        let login = UserDefaults.standard.value(forKey: "login")
+        if login == nil {
+            let vc = LoginVC()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: false)
+        }
         
         if WelcomeOnBoarding.shared.isNewUser() {
             let vc = WelcomeOnboardingVC()
@@ -80,17 +86,6 @@ class ArticleVC: UIViewController {
     
     //Setup navigation bar
     private func setupNavBar() {
-        //        //Transparent navigationbar
-        //        // Make the navigation bar's title with red text.
-        //        navigationController?.navigationBar.prefersLargeTitles = true
-        //        let appearance = UINavigationBarAppearance()
-        //        appearance.configureWithOpaqueBackground()
-        //        appearance.backgroundColor = UIColor.systemRed
-        //        appearance.titleTextAttributes = [.foregroundColor: UIColor.lightText] // With a red background, make the title more readable.
-        //        navigationItem.standardAppearance = appearance
-        ////        navigationItem.scrollEdgeAppearance = appearance
-        //        navigationItem.compactAppearance = appearance // For iPhone small navigation bar in landscape.
-        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) //UIImage.init(named: "transparent.png")
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
