@@ -1,14 +1,13 @@
 //
-//  WelcomeOnboarding.swift
+//  WelcomeOnboardingVC.swift
 //  News
 //
 //  Created by Bilal Durnagöl on 17.11.2020.
 //
 
-import Foundation
 import UIKit
 
-class WelcomeOnboarding: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
+class WelcomeOnboardingVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     var topics: Topics?
     

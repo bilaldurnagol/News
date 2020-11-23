@@ -22,16 +22,17 @@ class ArticleVC: UIViewController {
         tableView.register(ArticlesTableViewCell.self, forCellReuseIdentifier: ArticlesTableViewCell.identifier)
         return tableView
     }()
-    
+    let customBackgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
+        view.backgroundColor = customBackgroundColor
         view.addSubview(tableView)
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         
         guard let regionCode = regionCode else {
@@ -68,7 +69,7 @@ class ArticleVC: UIViewController {
         //Check isnewuser for onboarding
         
         if WelcomeOnBoarding.shared.isNewUser() {
-            let vc = WelcomeOnboarding()
+            let vc = WelcomeOnboardingVC()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
@@ -79,7 +80,17 @@ class ArticleVC: UIViewController {
     
     //Setup navigation bar
     private func setupNavBar() {
-        //Transparent navigationbar
+        //        //Transparent navigationbar
+        //        // Make the navigation bar's title with red text.
+        //        navigationController?.navigationBar.prefersLargeTitles = true
+        //        let appearance = UINavigationBarAppearance()
+        //        appearance.configureWithOpaqueBackground()
+        //        appearance.backgroundColor = UIColor.systemRed
+        //        appearance.titleTextAttributes = [.foregroundColor: UIColor.lightText] // With a red background, make the title more readable.
+        //        navigationItem.standardAppearance = appearance
+        ////        navigationItem.scrollEdgeAppearance = appearance
+        //        navigationItem.compactAppearance = appearance // For iPhone small navigation bar in landscape.
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) //UIImage.init(named: "transparent.png")
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -105,7 +116,10 @@ class ArticleVC: UIViewController {
         })
     }
     private func getFeaturedArticle() {
-        let urlString = "http://127.0.0.1:5000/featured_article"
+        guard let regionCode = regionCode else {
+            return
+        }
+        let urlString = "http://127.0.0.1:5000/featured_article/\(regionCode)"
         guard let url = URL(string: urlString) else { return }
         WebService.shared.getArticles(url: url, completion: {result in
             switch result {
@@ -118,9 +132,7 @@ class ArticleVC: UIViewController {
                 }
             }
         })
-        
     }
-    
 }
 
 
@@ -153,10 +165,10 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             return cell
         }else if indexPath.section == 1 {
-            let featuredArticle = self.featuredArticle![indexPath.row]
+            let featuredArticle = self.featuredArticle?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: FeaturedArticleTableViewCell.identifier,
                                                      for: indexPath) as! FeaturedArticleTableViewCell
-            cell.configure(article: featuredArticle)
+            cell.configure(article: featuredArticle ?? articleListVM.articles[indexPath.row])
             return cell
             
         } else {
@@ -171,8 +183,8 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 1 {
-            let featuredArticle = self.featuredArticle![indexPath.row]
-            let vc = ShowArticleVC(article: featuredArticle)
+            let featuredArticle = self.featuredArticle?[indexPath.row]
+            let vc = ShowArticleVC(article: featuredArticle ?? articleListVM.articles[indexPath.row])
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)

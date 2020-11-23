@@ -121,8 +121,8 @@ class ShowArticleVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.articleTitleLabel.text = article.title
         self.articlePublishedAtLabel.text = article.published_at
-        self.articleImageView.sd_setImage(with: URL(string: article.url_to_image!), completed: nil)
-        self.articleContentLabel.attributedText = NSMutableAttributedString(string: article.description ?? "No content")
+        self.articleImageView.sd_setImage(with: URL(string: article.url_to_image ?? "newsLogo"), completed: nil)
+        self.articleContentLabel.attributedText = NSMutableAttributedString(string: article.description ?? "If you want to see the news, click on the read more story button...")
         self.navBarTitle.text = article.source?.source_name
         self.articleURL = article.url
         self.urlToImage = article.url_to_image

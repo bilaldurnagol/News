@@ -55,7 +55,6 @@ class FeaturedArticleTableViewCell: UITableViewCell {
         contentView.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
         contentView.addSubview(featuredArticleView)
         
-        
         featuredArticleView.addSubview(featuredArticleImageView)
         featuredArticleView.addSubview(featuredArticleTitleLabel)
         featuredArticleView.addSubview(featuredArticlePublishedAtLabel)
