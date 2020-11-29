@@ -28,8 +28,13 @@
 		B56495EA25481AA40036934E /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56495E925481AA40036934E /* Article.swift */; };
 		B564964125481DCF0036934E /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B564964025481DCF0036934E /* ArticleViewModel.swift */; };
 		B56C2E442564035C0056BB53 /* WelcomeOnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56C2E432564035C0056BB53 /* WelcomeOnboardingVC.swift */; };
+		B572CF4A256F85EA005B63DE /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572CF49256F85E9005B63DE /* OnboardingVC.swift */; };
+		B572CF60256F95BB005B63DE /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B572CF54256F95BA005B63DE /* PlayfairDisplay-Black.ttf */; };
+		B572CF73256FA15D005B63DE /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572CF72256FA15D005B63DE /* RegisterVC.swift */; };
+		B572CF77256FA5A8005B63DE /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572CF76256FA5A8005B63DE /* LoginVC.swift */; };
 		B589AAB4254C057800A9D5C3 /* OnboardingTopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589AAB3254C057800A9D5C3 /* OnboardingTopicCollectionViewCell.swift */; };
 		B5A66606254AE5F3003D16B3 /* WelcomeOnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A66605254AE5F3003D16B3 /* WelcomeOnBoarding.swift */; };
+		B5ACD3E925724B8C00105119 /* IconTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD3E825724B8C00105119 /* IconTextButton.swift */; };
 		B5B88A0D25497ACF00813D38 /* SF-Compact-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0425497ACE00813D38 /* SF-Compact-Display-Black.otf */; };
 		B5B88A0E25497ACF00813D38 /* SF-Compact-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0525497ACE00813D38 /* SF-Compact-Display-Bold.otf */; };
 		B5B88A0F25497ACF00813D38 /* SF-Compact-Display-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0625497ACE00813D38 /* SF-Compact-Display-Ultralight.otf */; };
@@ -39,8 +44,6 @@
 		B5B88A1325497ACF00813D38 /* SF-Compact-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0A25497ACF00813D38 /* SF-Compact-Display-Semibold.otf */; };
 		B5B88A1425497ACF00813D38 /* SF-Compact-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0B25497ACF00813D38 /* SF-Compact-Display-Light.otf */; };
 		B5B88A1525497ACF00813D38 /* SF-Compact-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0C25497ACF00813D38 /* SF-Compact-Display-Heavy.otf */; };
-		B5C8B2B8256BABDA0021B983 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C8B2B7256BABDA0021B983 /* RegisterVC.swift */; };
-		B5C8B2BB256BABE90021B983 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C8B2BA256BABE90021B983 /* LoginVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,8 +72,13 @@
 		B56495E925481AA40036934E /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		B564964025481DCF0036934E /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
 		B56C2E432564035C0056BB53 /* WelcomeOnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnboardingVC.swift; sourceTree = "<group>"; };
+		B572CF49256F85E9005B63DE /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
+		B572CF54256F95BA005B63DE /* PlayfairDisplay-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Black.ttf"; sourceTree = "<group>"; };
+		B572CF72256FA15D005B63DE /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterVC.swift; path = News/Controllers/Other/OnBoarding/RegisterVC.swift; sourceTree = SOURCE_ROOT; };
+		B572CF76256FA5A8005B63DE /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginVC.swift; path = News/Controllers/Other/OnBoarding/LoginVC.swift; sourceTree = SOURCE_ROOT; };
 		B589AAB3254C057800A9D5C3 /* OnboardingTopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5A66605254AE5F3003D16B3 /* WelcomeOnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnBoarding.swift; sourceTree = "<group>"; };
+		B5ACD3E825724B8C00105119 /* IconTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextButton.swift; sourceTree = "<group>"; };
 		B5B88A0425497ACE00813D38 /* SF-Compact-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Black.otf"; sourceTree = "<group>"; };
 		B5B88A0525497ACE00813D38 /* SF-Compact-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Bold.otf"; sourceTree = "<group>"; };
 		B5B88A0625497ACE00813D38 /* SF-Compact-Display-Ultralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Ultralight.otf"; sourceTree = "<group>"; };
@@ -80,8 +88,6 @@
 		B5B88A0A25497ACF00813D38 /* SF-Compact-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Semibold.otf"; sourceTree = "<group>"; };
 		B5B88A0B25497ACF00813D38 /* SF-Compact-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Light.otf"; sourceTree = "<group>"; };
 		B5B88A0C25497ACF00813D38 /* SF-Compact-Display-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Heavy.otf"; sourceTree = "<group>"; };
-		B5C8B2B7256BABDA0021B983 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterVC.swift; path = News/Controllers/Other/OnBoarding/RegisterVC.swift; sourceTree = SOURCE_ROOT; };
-		B5C8B2BA256BABE90021B983 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginVC.swift; path = News/Controllers/Other/OnBoarding/LoginVC.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +252,7 @@
 				B51381842548677C00D7A6FB /* NetworkMonitor.swift */,
 				B5A66605254AE5F3003D16B3 /* WelcomeOnBoarding.swift */,
 				B5503483254FF77000B4D597 /* DatabaseManager.swift */,
+				B5ACD3E825724B8C00105119 /* IconTextButton.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -263,6 +270,7 @@
 			children = (
 				B5A45BE4254AD63000B1CE42 /* Login_Register */,
 				B56C2E432564035C0056BB53 /* WelcomeOnboardingVC.swift */,
+				B572CF49256F85E9005B63DE /* OnboardingVC.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -270,8 +278,8 @@
 		B5A45BE4254AD63000B1CE42 /* Login_Register */ = {
 			isa = PBXGroup;
 			children = (
-				B5C8B2B7256BABDA0021B983 /* RegisterVC.swift */,
-				B5C8B2BA256BABE90021B983 /* LoginVC.swift */,
+				B572CF72256FA15D005B63DE /* RegisterVC.swift */,
+				B572CF76256FA5A8005B63DE /* LoginVC.swift */,
 			);
 			path = Login_Register;
 			sourceTree = "<group>";
@@ -279,6 +287,7 @@
 		B5B88A0325497A9F00813D38 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				B572CF54256F95BA005B63DE /* PlayfairDisplay-Black.ttf */,
 				B5B88A0425497ACE00813D38 /* SF-Compact-Display-Black.otf */,
 				B5B88A0525497ACE00813D38 /* SF-Compact-Display-Bold.otf */,
 				B5B88A0C25497ACF00813D38 /* SF-Compact-Display-Heavy.otf */,
@@ -355,6 +364,7 @@
 				B5B88A1025497ACF00813D38 /* SF-Compact-Display-Thin.otf in Resources */,
 				B5B88A1525497ACF00813D38 /* SF-Compact-Display-Heavy.otf in Resources */,
 				B56495C9254814310036934E /* LaunchScreen.storyboard in Resources */,
+				B572CF60256F95BB005B63DE /* PlayfairDisplay-Black.ttf in Resources */,
 				B5B88A1125497ACF00813D38 /* SF-Compact-Display-Medium.otf in Resources */,
 				B5B88A0F25497ACF00813D38 /* SF-Compact-Display-Ultralight.otf in Resources */,
 				B5B88A1325497ACF00813D38 /* SF-Compact-Display-Semibold.otf in Resources */,
@@ -416,20 +426,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B572CF77256FA5A8005B63DE /* LoginVC.swift in Sources */,
 				B526195A2548248200F54A31 /* ArticlesTableViewCell.swift in Sources */,
 				B56495BD2548142D0036934E /* AppDelegate.swift in Sources */,
-				B5C8B2BB256BABE90021B983 /* LoginVC.swift in Sources */,
 				B52619552548241100F54A31 /* ShowArticleVC.swift in Sources */,
 				B56495EA25481AA40036934E /* Article.swift in Sources */,
 				B52619522548238A00F54A31 /* WebService.swift in Sources */,
 				B51381822548667A00D7A6FB /* ConnectionControlVC.swift in Sources */,
 				B51381852548677C00D7A6FB /* NetworkMonitor.swift in Sources */,
 				B526195E254824A700F54A31 /* CollectionTableViewCell.swift in Sources */,
-				B5C8B2B8256BABDA0021B983 /* RegisterVC.swift in Sources */,
 				B5A66606254AE5F3003D16B3 /* WelcomeOnBoarding.swift in Sources */,
 				B526194F2548221A00F54A31 /* ArticleVC.swift in Sources */,
 				B56C2E442564035C0056BB53 /* WelcomeOnboardingVC.swift in Sources */,
+				B572CF4A256F85EA005B63DE /* OnboardingVC.swift in Sources */,
 				B52619642548256E00F54A31 /* TopicsCollectionViewCell.swift in Sources */,
+				B572CF73256FA15D005B63DE /* RegisterVC.swift in Sources */,
+				B5ACD3E925724B8C00105119 /* IconTextButton.swift in Sources */,
 				B589AAB4254C057800A9D5C3 /* OnboardingTopicCollectionViewCell.swift in Sources */,
 				B5503484254FF77000B4D597 /* DatabaseManager.swift in Sources */,
 				B52619612548254700F54A31 /* FeaturedArticleTableViewCell.swift in Sources */,

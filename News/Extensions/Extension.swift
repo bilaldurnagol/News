@@ -42,7 +42,7 @@ extension UITextField {
         
         bottomLine.frame = CGRect(x: 0, y: self.frame.height - 2, width: self.frame.width, height: 2)
         
-        bottomLine.backgroundColor = UIColor(red: 98/255, green: 114/255, blue: 250/255, alpha: 1).cgColor
+        bottomLine.backgroundColor = UIColor.red.cgColor
         
         // Remove border on text field
         self.borderStyle = .none

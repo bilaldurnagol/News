@@ -67,9 +67,9 @@ class ArticleVC: UIViewController {
             present(vc, animated: false)
         }
         //Check isnewuser for onboarding
-        let login = UserDefaults.standard.value(forKey: "login")
+        let login = UserDefaults.standard.value(forKey: "currentUser")
         if login == nil {
-            let vc = LoginVC()
+            let vc = OnboardingVC()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
         }

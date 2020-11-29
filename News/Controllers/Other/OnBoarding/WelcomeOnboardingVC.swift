@@ -81,16 +81,16 @@ class WelcomeOnboardingVC: UIViewController, UICollectionViewDelegate, UICollect
                 collectionView.backgroundColor = .clear
                 pageView.addSubview(collectionView)
                 
-                //button
-                let button = UIButton(frame: CGRect(x: 50, y: self.collectionView!.bottom, width: pageView.width - 100, height: 50))
+                //continue buttons
+                let continueButton = UIButton(frame: CGRect(x: 50, y: self.collectionView!.bottom, width: pageView.width - 100, height: 50))
                 
-                button.setTitleColor(.white, for: .normal)
-                button.backgroundColor = UIColor(red: 79/255, green: 68/255, blue: 255/255, alpha: 1)
-                button.layer.cornerRadius = 25.0
-                button.setTitle("Continue", for: .normal)
-                pageView.addSubview(button)
-                button.tag = i+1
-                button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+                continueButton.setTitleColor(.white, for: .normal)
+                continueButton.backgroundColor = UIColor(red: 79/255, green: 68/255, blue: 255/255, alpha: 1)
+                continueButton.layer.cornerRadius = 25.0
+                continueButton.setTitle("Devam", for: .normal)
+                pageView.addSubview(continueButton)
+                continueButton.tag = i+1
+                continueButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
                 
             }
             else {
@@ -99,6 +99,7 @@ class WelcomeOnboardingVC: UIViewController, UICollectionViewDelegate, UICollect
                 let titleLabel = UILabel(frame: CGRect(x: 10, y: imageView.bottom + 35, width: pageView.width - 20, height: 100))
                 let contentLabel = UILabel(frame: CGRect(x: 50, y: titleLabel.bottom + 43, width: view.width - 100, height: 50))
                 let button = UIButton(frame: CGRect(x: 50, y: contentLabel.bottom + 30, width: pageView.width - 100, height: 50))
+                
                 
                 //title
                 titleLabel.textAlignment = .center
@@ -144,7 +145,7 @@ class WelcomeOnboardingVC: UIViewController, UICollectionViewDelegate, UICollect
                 button.layer.cornerRadius = 25.0
                 button.setTitle("Devam", for: .normal)
                 if i == 3 {
-                    button.setTitle("Giriş Yap", for: .normal)
+                    button.setTitle("Okumaya Başlayın", for: .normal)
                 }
                 button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
                 button.tag = i+1
