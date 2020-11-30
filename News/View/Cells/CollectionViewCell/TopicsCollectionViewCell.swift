@@ -73,25 +73,46 @@ class TopicsCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        guard let safeRegionCode = regionCode else {
-            return
-        }
-        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/\(topic.lowercased())") else {
-            return
-        }
-        
-        WebService.shared.getArticles(url: url, completion: {result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let articles):
-                if let articles = articles {
-                    self.topicArticleListVM = ArticleListViewModel(articles: articles)
-                    if let delegate = self.delegate {
-                        delegate.chooseTopic(articles: self.topicArticleListVM!)
+        if regionCode == nil {
+            guard let regionCode = Locale.current.regionCode else {return}
+            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/\(topic.lowercased())") else {
+                return
+            }
+            
+            WebService.shared.getArticles(url: url, completion: {result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let articles):
+                    if let articles = articles {
+                        self.topicArticleListVM = ArticleListViewModel(articles: articles)
+                        if let delegate = self.delegate {
+                            delegate.chooseTopic(articles: self.topicArticleListVM!)
+                        }
                     }
                 }
+            })
+        }else {
+            guard let safeRegionCode = regionCode else {return}
+            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/\(topic.lowercased())") else {
+                return
             }
-        })
+            
+            WebService.shared.getArticles(url: url, completion: {result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let articles):
+                    if let articles = articles {
+                        self.topicArticleListVM = ArticleListViewModel(articles: articles)
+                        if let delegate = self.delegate {
+                            delegate.chooseTopic(articles: self.topicArticleListVM!)
+                        }
+                    }
+                }
+            })
+
+        }
+
     }
 }

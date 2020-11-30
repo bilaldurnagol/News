@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OnboardingTopicCollectionViewCell: UICollectionViewCell {
+class RegisterTopicCollectionViewCell: UICollectionViewCell {
     static let identifier = "OnboardingTopicCollectionViewCell"
     private let topicImage: UIImageView = {
         let imageView = UIImageView()

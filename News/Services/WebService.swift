@@ -13,6 +13,7 @@ class WebService {
 }
 
 extension WebService {
+    
     //Get article data in url
     public func getArticles(url: URL, completion: @escaping (Result<[Article]?, Error>) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
@@ -25,12 +26,13 @@ extension WebService {
         }).resume()
     }
     
-    //Create new user
+    //MARK: - USERS FUNCS
     
+    //Create new user
     public func createUser(user: User, completion: @escaping (Result<User?, Error>) -> Void) {
         guard let name = user.name, let email = user.email, let location = user.location, let password = user.password else {return}
         
-        let param = [
+        let params = [
             "name": name,
             "email": email,
             "location": location,
@@ -41,12 +43,10 @@ extension WebService {
             var urlRequest = URLRequest(url: url)
             urlRequest.httpMethod = "POST"
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            let data = try JSONSerialization.data(withJSONObject: param, options: .init())
+            let data = try JSONSerialization.data(withJSONObject: params, options: .init())
             urlRequest.httpBody = data
-            URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, res, error in
-                
-                
-                guard let httpResponse = res as? HTTPURLResponse, httpResponse.statusCode == 200, let jsonData = data else {
+            URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, reponse, error in
+                guard let httpResponse = reponse as? HTTPURLResponse, httpResponse.statusCode == 200, let jsonData = data else {
                     guard let jsonError = try? JSONDecoder().decode(RegisterError.self, from: data!) else {return}
                     let newError = WebServiceError.failedToRegister(jsonError.error)
                     completion(.failure(newError))
@@ -61,7 +61,44 @@ extension WebService {
             completion(.failure(WebServiceError.failedToFetch))
         }
     }
+    
+    //add topics
+    
+    public func addTopic(userEmail: String, topics: [String],  completion: @escaping (Bool) -> ()) {
+        var params = [
+            "topics": []
+        ] as [String: Any]
+        
+        for topic in topics {
+            let topicArray: [String: Any] = ["topic_name" : topic]
+            var topicsArray = params["topics"] as? [[String: Any]] ?? [[String: Any]]()
+            topicsArray.append(topicArray)
+            params["topics"] = topicsArray
+        }
+        
+        guard let url = URL(string: "http://127.0.0.1:5000/add_topics/\(userEmail)") else {return}
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
+        urlRequest.httpBody = data
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                completion(false)
+                return
+            }
+            
+            completion(true)
+        }).resume()
+        
+    
+        
+    }
 }
+
+
+
+
 
 extension WebService {
     //Errors

@@ -11,7 +11,7 @@ class ArticleVC: UIViewController {
     
     private var articleList: [Article]?
     private var topicArray = UserDefaults.standard.value(forKey: "chooseTopics")
-    private let regionCode = UserDefaults.standard.value(forKey: "regionCode")
+    private var regionCode = UserDefaults.standard.value(forKey: "regionCode")
     private var articleListVM: ArticleListViewModel!
     private var featuredArticle: [Article]?
     
@@ -35,17 +35,29 @@ class ArticleVC: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         
-        guard let regionCode = regionCode else {
-            return
+        if regionCode == nil {
+            guard let regionCode = Locale.current.regionCode else {return}
+            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
+            DispatchQueue.main.async {
+                self.getArticles(with: url, completion: {success in
+                    if success {print("OK!")}
+                    else {print("Fail!")}
+                })
+            }
+        }else {
+            guard let regionCode = regionCode else {return}
+            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
+            DispatchQueue.main.async {
+                self.getArticles(with: url, completion: {success in
+                    if success {print("OK!")}
+                    else {print("Fail!")}
+                })
+            }
+            
         }
         
-        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
-        DispatchQueue.main.async {
-            self.getArticles(with: url, completion: {success in
-                if success {print("OK!")}
-                else {print("Fail!")}
-            })
-        }
+        
+      
         
         
     }
@@ -73,13 +85,6 @@ class ArticleVC: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
         }
-        
-        if WelcomeOnBoarding.shared.isNewUser() {
-            let vc = WelcomeOnboardingVC()
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }
-        
         //get feateured article. auto update in tableview
         self.getFeaturedArticle()
     }
@@ -111,22 +116,43 @@ class ArticleVC: UIViewController {
         })
     }
     private func getFeaturedArticle() {
-        guard let regionCode = regionCode else {
-            return
-        }
-        let urlString = "http://127.0.0.1:5000/featured_article/\(regionCode)"
-        guard let url = URL(string: urlString) else { return }
-        WebService.shared.getArticles(url: url, completion: {result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let featuredArticle):
-                self.featuredArticle = featuredArticle
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+        //if isempty regioncode
+        if regionCode == nil {
+            guard let newRegionCode = Locale.current.regionCode else {return}
+            let urlString = "http://127.0.0.1:5000/featured_article/\(newRegionCode)"
+            guard let url = URL(string: urlString) else { return }
+            WebService.shared.getArticles(url: url, completion: {result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let featuredArticle):
+                    self.featuredArticle = featuredArticle
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
-            }
-        })
+            })
+        }else {
+            
+            guard let regionCode = regionCode else {return}
+            let urlString = "http://127.0.0.1:5000/featured_article/\(regionCode)"
+            guard let url = URL(string: urlString) else { return }
+            WebService.shared.getArticles(url: url, completion: {result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let featuredArticle):
+                    self.featuredArticle = featuredArticle
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            })
+            
+        }
+       
+       
+       
     }
 }
 

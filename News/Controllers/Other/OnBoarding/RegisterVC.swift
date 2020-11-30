@@ -216,12 +216,21 @@ class RegisterVC: UIViewController {
     
     @objc private func didTapRegister() {
         print("Did tapped register button")
-        guard let name = nameTextfield.text, let email = emailTextfield.text, let password = passwordTextfield.text else { return }
-        let user = User(name: name, email: email, location: "TR", password: password)
+        guard let name = nameTextfield.text, let email = emailTextfield.text, let password = passwordTextfield.text, let location = Locale.current.regionCode else { return }
+    
+        let user = User(name: name, email: email, location: location, password: password)
         WebService.shared.createUser(user: user, completion: {result in
             switch result {
             case .success(let user):
-                print(user as Any)
+                UserDefaults.standard.setValue(email, forKey: "currentUser")
+                UserDefaults.standard.setValue(user?.location, forKey: "regionCode")
+                DispatchQueue.main.async {
+                    let vc = ChooseTopicVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
+              
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }

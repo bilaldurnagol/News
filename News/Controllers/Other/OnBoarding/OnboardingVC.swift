@@ -71,6 +71,8 @@ class OnboardingVC: UIViewController {
         setupNavBar()
         
         registerButton.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)
+        guestButton.addTarget(self, action: #selector(didTapGuestButton), for: .touchUpInside)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -104,15 +106,19 @@ class OnboardingVC: UIViewController {
     //objc funcs
     
     @objc private func didTabSignButton() {
-        
         let vc = LoginVC()
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     @objc private func didTapRegisterButton() {
         let vc = RegisterVC()
+        vc.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func didTapGuestButton() {
+        let vc = ChooseTopicVC()
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
     }
