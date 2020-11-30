@@ -34,17 +34,27 @@ struct Source: Decodable, Any {
 }
 
 
-struct Topics {
-    var topicArray: [String]
-}
-
 struct User: Codable {
     let name: String?
     let email: String?
     let location: String?
     let password: String?
+    
 }
 
 struct Topic: Codable {
     var topic_name: String?
+}
+
+
+struct UserInfo: Decodable {
+    let user_id: Int?
+    let user_name: String?
+    let user_email: String?
+    let user_location: String?
+    let topics: [Topics]?
+}
+
+struct Topics: Decodable {
+    let topic_name: String?
 }

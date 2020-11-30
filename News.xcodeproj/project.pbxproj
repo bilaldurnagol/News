@@ -43,6 +43,7 @@
 		B5B88A1325497ACF00813D38 /* SF-Compact-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0A25497ACF00813D38 /* SF-Compact-Display-Semibold.otf */; };
 		B5B88A1425497ACF00813D38 /* SF-Compact-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0B25497ACF00813D38 /* SF-Compact-Display-Light.otf */; };
 		B5B88A1525497ACF00813D38 /* SF-Compact-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0C25497ACF00813D38 /* SF-Compact-Display-Heavy.otf */; };
+		B5C702A22574FCF40098FB91 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C702A12574FCF40098FB91 /* SettingsVC.swift */; };
 		B5D515932573880D000CF36F /* ChooseTopicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D515922573880D000CF36F /* ChooseTopicVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		B5B88A0A25497ACF00813D38 /* SF-Compact-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Semibold.otf"; sourceTree = "<group>"; };
 		B5B88A0B25497ACF00813D38 /* SF-Compact-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Light.otf"; sourceTree = "<group>"; };
 		B5B88A0C25497ACF00813D38 /* SF-Compact-Display-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Heavy.otf"; sourceTree = "<group>"; };
+		B5C702A12574FCF40098FB91 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		B5D515922573880D000CF36F /* ChooseTopicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTopicVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,8 +133,9 @@
 		B51381802548656C00D7A6FB /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				B51381812548667A00D7A6FB /* ConnectionControlVC.swift */,
 				B5A45BE3254AD62800B1CE42 /* OnBoarding */,
+				B5C702A12574FCF40098FB91 /* SettingsVC.swift */,
+				B51381812548667A00D7A6FB /* ConnectionControlVC.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				B5503484254FF77000B4D597 /* DatabaseManager.swift in Sources */,
 				B52619612548254700F54A31 /* FeaturedArticleTableViewCell.swift in Sources */,
 				B56495E425481A2E0036934E /* Extension.swift in Sources */,
+				B5C702A22574FCF40098FB91 /* SettingsVC.swift in Sources */,
 				B564964125481DCF0036934E /* ArticleViewModel.swift in Sources */,
 				B56495BF2548142D0036934E /* SceneDelegate.swift in Sources */,
 			);
