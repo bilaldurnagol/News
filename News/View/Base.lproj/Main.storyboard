@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gZe-tQ-awA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Pbw-Xy-lej">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
@@ -11,7 +11,7 @@
         <!--OnboardingVC-->
         <scene sceneID="IQi-nZ-wM0">
             <objects>
-                <viewController id="pHn-66-ETd" customClass="OnboardingVC" customModule="News" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onboarding" id="pHn-66-ETd" customClass="OnboardingVC" customModule="News" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5nt-N0-DKj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,7 +95,7 @@
         <!--Navigation Controller-->
         <scene sceneID="GUQ-DP-zDD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gZe-tQ-awA" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" id="gZe-tQ-awA" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HXj-B5-U2n">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

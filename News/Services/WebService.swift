@@ -63,7 +63,6 @@ extension WebService {
     }
     
     //add topics
-    
     public func addTopic(userEmail: String, topics: [String],  completion: @escaping (Bool) -> ()) {
         var params = [
             "topics": []
@@ -82,6 +81,7 @@ extension WebService {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
         urlRequest.httpBody = data
+        
         URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, response, error in
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 completion(false)
@@ -90,9 +90,52 @@ extension WebService {
             
             completion(true)
         }).resume()
-        
+    }
     
+    //login
+    public func login(email: String, password: String, completion: @escaping (Result<UserInfo, Error>) -> ()) {
+        let params = [
+            "email": email,
+            "password": password
+        ] as [String: Any]
         
+        let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
+        
+        guard let url = URL(string: "http://127.0.0.1:5000/login") else {return}
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = data
+        
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, response, error in
+            guard let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
+                guard let jsonError = try? JSONDecoder().decode(RegisterError.self, from: data!) else {return}
+                completion(.failure( WebServiceError.failedToRegister(jsonError.error)))
+                return
+            }
+            self.getUserInfo(with: email, completion: { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let userInfo):
+                    completion(.success(userInfo))
+                }
+            })
+        }).resume()
+    }
+    
+    public func getUserInfo(with email: String , completion: @escaping (Result<UserInfo, Error>) ->()) {
+        print(email)
+        guard let url = URL(string: "http://127.0.0.1:5000/user_info/\(email)") else {return}
+        URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
+            guard let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
+                completion(.failure(WebServiceError.failedToFetchUserInfo))
+                return
+            }
+            let userInfo = try? JSONDecoder().decode(UserInfo.self, from: data!)
+            completion(.success(userInfo!))
+        }).resume()
     }
 }
 
@@ -105,6 +148,7 @@ extension WebService {
     enum WebServiceError: Error {
         case failedToFetch
         case failedToRegister(String)
+        case failedToFetchUserInfo
     }
 }
 
@@ -115,6 +159,8 @@ extension WebService.WebServiceError: LocalizedError {
                 return NSLocalizedString("\(error)", comment: "Error")
             case .failedToFetch:
                 return NSLocalizedString("Verileri çekerken bir hata oluştu", comment: "failedToFetch")
+            case .failedToFetchUserInfo:
+                return NSLocalizedString("Haber konularını çekerken hata oluştu", comment: "failedToFetchUserInfo")
             }
         }
 }

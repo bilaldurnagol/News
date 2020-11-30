@@ -82,8 +82,9 @@ class ArticleVC: UIViewController {
         let login = UserDefaults.standard.value(forKey: "currentUser")
         if login == nil {
             let vc = OnboardingVC()
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: false)
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: false)
         }
         //get feateured article. auto update in tableview
         self.getFeaturedArticle()
@@ -95,6 +96,8 @@ class ArticleVC: UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(didTapSettingsButton))
     }
     
     private func getArticles(with url: URL, completion: @escaping (Bool) -> ()) {
@@ -112,7 +115,6 @@ class ArticleVC: UIViewController {
                 }
                 completion(true)
             }
-            
         })
     }
     private func getFeaturedArticle() {
@@ -133,7 +135,6 @@ class ArticleVC: UIViewController {
                 }
             })
         }else {
-            
             guard let regionCode = regionCode else {return}
             let urlString = "http://127.0.0.1:5000/featured_article/\(regionCode)"
             guard let url = URL(string: urlString) else { return }
@@ -148,11 +149,12 @@ class ArticleVC: UIViewController {
                     }
                 }
             })
-            
         }
-       
-       
-       
+    }
+    
+    //MARK: -objc Funcs
+    @objc private func didTapSettingsButton() {
+        print("Tapped settings bar button")
     }
 }
 
@@ -160,10 +162,8 @@ class ArticleVC: UIViewController {
 //MARK: - Tableview configure
 extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.articleListVM == nil ? 0 : self.articleListVM.numberOfSection
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -177,7 +177,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier,
@@ -185,6 +184,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             cell.configure(topics: topicArray as! [String])
             cell.delegate = self
             return cell
+            
         }else if indexPath.section == 1 {
             let featuredArticle = self.featuredArticle?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: FeaturedArticleTableViewCell.identifier,
@@ -202,6 +202,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 1 {
             let featuredArticle = self.featuredArticle?[indexPath.row]
@@ -209,8 +210,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
-            
-            
         }else {
             let articleVM = articleListVM.articleAtIndex(indexPath.row)
             let vc = ShowArticleVC(article: articleVM)
@@ -218,7 +217,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
         }
-        
     }
     
     
@@ -231,7 +229,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             return 130
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -242,7 +239,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             return 20
         }
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -293,7 +289,6 @@ extension ArticleVC: CollectionTableViewCellDelegate {
             self.tableView.reloadData()
         }
     }
-    
 }
 /*
  SF Compact Display

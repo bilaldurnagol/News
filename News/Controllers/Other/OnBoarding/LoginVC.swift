@@ -202,6 +202,32 @@ class LoginVC: UIViewController {
     
     @objc private func didTapLogin() {
         print("Did tap login button")
+        var topicArray = [String]()
+        guard let email = emailTextfield.text, let password = passwordTextfield.text else {return}
+        WebService.shared.login(email: email, password: password, completion: { result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let userInfo):
+                guard let topics = userInfo.topics, let location = userInfo.user_location, let email = userInfo.user_email else {return}
+                
+                for topic in topics {
+                    let safeTopic = topic.topic_name
+                    topicArray.append(safeTopic!)
+                }
+                print(topicArray)
+                UserDefaults.standard.setValue(topicArray, forKey: "chooseTopics")
+                UserDefaults.standard.setValue(email, forKey: "currentUser")
+                UserDefaults.standard.setValue(location, forKey: "regionCode")
+                
+                DispatchQueue.main.async {
+                    let vc = ArticleVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
+            }
+            
+        })
     }
 }
 extension LoginVC: UITextFieldDelegate {
