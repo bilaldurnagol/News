@@ -19,7 +19,7 @@ class OnboardingVC: UIViewController {
         let label = UILabel()
         label.text = "Hoşgeldiniz,"
         label.textColor = .white
-        label.font = UIFont(name: "PlayfairDisplay-Black", size: 60.0)
+        label.font = UIFont(name: "PlayfairDisplay-Black", size: 50.0)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -78,7 +78,7 @@ class OnboardingVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         backgroundImage.frame = view.bounds
-        titleLabel.frame = CGRect(x: 15, y: view.top + 205, width: view.width - 30, height: 80)
+        titleLabel.frame = CGRect(x: 15, y: view.top + 155, width: view.width - 30, height: 80)
         subtitleLabel.frame = CGRect(x: 15, y: titleLabel.bottom, width: view.width - 30, height: 80)
         
         guestButton.frame = CGRect(x: 45, y: view.bottom - 92, width: view.width - 90, height: 55)

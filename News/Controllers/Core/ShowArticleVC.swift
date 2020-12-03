@@ -34,7 +34,7 @@ class ShowArticleVC: UIViewController {
     
     private let readStoryButton: UIButton = {
         let button = UIButton()
-        button.setTitle("READ FULL STORY", for: .normal)
+        button.setTitle("TAMAMINI OKU", for: .normal)
         button.setTitleColor(UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1), for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.borderColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1).cgColor
@@ -45,7 +45,7 @@ class ShowArticleVC: UIViewController {
     
     private let shareStoryButton: UIButton = {
         let button = UIButton()
-        button.setTitle("SHARE", for: .normal)
+        button.setTitle("PAYLAŞ", for: .normal)
         button.setTitleColor(UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1), for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.borderColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1).cgColor
@@ -165,7 +165,6 @@ class ShowArticleVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        
         //Constrain scroll view
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
@@ -231,7 +230,6 @@ class ShowArticleVC: UIViewController {
                                                                y: articleImageView.bottom,
                                                                width: outerView.width,
                                                                height: 10)).cgPath
-        
     }
     
     //Setup navigation bar
@@ -279,7 +277,6 @@ class ShowArticleVC: UIViewController {
         let shareSheetVC = UIActivityViewController(activityItems: [shareImage, shareURL], applicationActivities: nil)
         present(shareSheetVC, animated: true)
     }
-    
 }
 //MARK: - Database funcs
 extension ShowArticleVC {
@@ -293,7 +290,6 @@ extension ShowArticleVC {
             return
         }
         URLSession.shared.dataTask(with: url).resume()
-        
     }
 }
 

@@ -28,6 +28,7 @@ class LoginVC: UIViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.clipsToBounds = true
         return scrollView
     }()
     
@@ -150,6 +151,9 @@ class LoginVC: UIViewController {
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapSignUp))
         signUpLabel.addGestureRecognizer(gesture)
+        
+        let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
+        view.addGestureRecognizer(gestureHideKeyboard)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -159,14 +163,12 @@ class LoginVC: UIViewController {
         
         let width = scrollView.width - 90
         
-        titleLabel.frame = CGRect(x: 45, y: scrollView.top + 142, width: width, height: 60)
+        titleLabel.frame = CGRect(x: 45, y: scrollView.top + 50, width: width, height: 60)
         stackView.frame = CGRect(x: 45, y: titleLabel.bottom + 35, width: width, height: 140)
         loginButton.frame = CGRect(x: 45, y: stackView.bottom + 15, width: width, height: 55)
         orLabel.frame = CGRect(x: 45, y: loginButton.bottom + 20, width: width, height: 35)
         facebookButton.frame = CGRect(x: 45, y: orLabel.bottom + 20, width: width, height: 55)
         signUpLabel.frame = CGRect(x: 45, y: facebookButton.bottom + 23 , width: scrollView.width - 90, height: 20)
-        
-        
         
         
         //seperator's
@@ -215,19 +217,23 @@ class LoginVC: UIViewController {
                     let safeTopic = topic.topic_name
                     topicArray.append(safeTopic!)
                 }
-                print(topicArray)
+                
                 UserDefaults.standard.setValue(topicArray, forKey: "chooseTopics")
                 UserDefaults.standard.setValue(email, forKey: "currentUser")
                 UserDefaults.standard.setValue(location, forKey: "regionCode")
                 
                 DispatchQueue.main.async {
                     let vc = ArticleVC()
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
+                    let nav = UINavigationController(rootViewController: vc)
+                    nav.modalPresentationStyle = .fullScreen
+                    self.present(nav, animated: true)
                 }
             }
-            
         })
+    }
+    
+    @objc private func hideKeyboard(){
+        view.endEditing(true)
     }
 }
 extension LoginVC: UITextFieldDelegate {

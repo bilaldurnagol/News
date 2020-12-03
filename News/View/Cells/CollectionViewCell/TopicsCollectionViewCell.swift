@@ -69,13 +69,32 @@ class TopicsCollectionViewCell: UICollectionViewCell {
         
     }
     @objc func didTapTopicButton() {
+        var safeTopic = ""
         guard let topic = topicButton.titleLabel?.text else {
             return
+        }
+        switch topic {
+        case "Genel":
+            safeTopic = "General"
+        case "İş":
+            safeTopic = "Business"
+        case "Sağlık":
+            safeTopic = "Health"
+        case "Bilim":
+            safeTopic = "Science"
+        case "Spor":
+            safeTopic = "Sports"
+        case "Teknoloji":
+            safeTopic = "Technology"
+        case "Eğlence":
+            safeTopic = "Entertainment"
+        default:
+            print("Empty")
         }
         
         if regionCode == nil {
             guard let regionCode = Locale.current.regionCode else {return}
-            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/\(topic.lowercased())") else {
+            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/\(safeTopic.lowercased())") else {
                 return
             }
             
@@ -92,9 +111,9 @@ class TopicsCollectionViewCell: UICollectionViewCell {
                     }
                 }
             })
-        }else {
+        } else {
             guard let safeRegionCode = regionCode else {return}
-            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/\(topic.lowercased())") else {
+            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/\(safeTopic.lowercased())") else {
                 return
             }
             
@@ -111,8 +130,6 @@ class TopicsCollectionViewCell: UICollectionViewCell {
                     }
                 }
             })
-
         }
-
     }
 }

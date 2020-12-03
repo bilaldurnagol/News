@@ -12,7 +12,7 @@ class ChooseTopicVC: UIViewController {
     var collectionView: UICollectionView?
     
     let scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         return scrollView
     }()
     
@@ -39,10 +39,11 @@ class ChooseTopicVC: UIViewController {
         return button
     }()
     
-    var topicArray = ["Business","Entertainment","Health","Science","Sports","Technology"]
-    var deselectedTopicArray = ["Business","Entertainment","Health","Science","Sports","Technology"]
+//    var topicArray = ["Business","Entertainment","Health","Science","Sports","Technology"]
+    var topicArray = ["İş","Eğlence","Sağlık","Bilim","Spor","Teknoloji"]
+    var deselectedTopicArray = ["İş","Eğlence","Sağlık","Bilim","Spor","Teknoloji"]
     var chooseTopicsArray = [String]()
-    var safeChooseTopicsArray = ["General"]
+    var safeChooseTopicsArray = ["Genel"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,10 +75,20 @@ class ChooseTopicVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
-        titleLabel.frame = CGRect(x: 10, y: 0, width: scrollView.width - 20, height: 50)
-        collectionView?.frame = CGRect(x: 0, y: titleLabel.bottom + 20, width: scrollView.width, height: scrollView.height - 100 - 60 - 20 - 20 - 60)
-        topicAddButton.frame = CGRect(x: 45, y: collectionView!.bottom , width: scrollView.width - 90, height: 60)
+        titleLabel.frame = CGRect(x: 10,
+                                  y: 0,
+                                  width: scrollView.width - 20,
+                                  height: 50)
         
+        collectionView?.frame = CGRect(x: 0,
+                                       y: titleLabel.bottom + 20,
+                                       width: scrollView.width,
+                                       height: scrollView.height - 100 - 60 - 20 - 20 - 60)
+        
+        topicAddButton.frame = CGRect(x: 45,
+                                      y: collectionView!.bottom,
+                                      width: scrollView.width - 90,
+                                      height: 60)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -104,10 +115,10 @@ class ChooseTopicVC: UIViewController {
                     UserDefaults.standard.setValue(self.safeChooseTopicsArray, forKey: "chooseTopics")
                     DispatchQueue.main.async {
                         let vc = ArticleVC()
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
+                        let nav = UINavigationController(rootViewController: vc)
+                        nav.modalPresentationStyle = .fullScreen
+                        self.present(nav, animated: true)
                     }
-                
                 } else {
                     print("Failed to added topics")
                 }
@@ -115,17 +126,18 @@ class ChooseTopicVC: UIViewController {
         } else {
             UserDefaults.standard.setValue(self.safeChooseTopicsArray, forKey: "chooseTopics")
             UserDefaults.standard.setValue("guest", forKey: "currentUser")
+            let location = Locale.current.regionCode
+            UserDefaults.standard.setValue(location, forKey: "regionCode")
             DispatchQueue.main.async {
                 let vc = ArticleVC()
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
             }
         }
-       
-      
     }
-    
 }
+
 extension ChooseTopicVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

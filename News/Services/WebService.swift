@@ -126,7 +126,6 @@ extension WebService {
     }
     
     public func getUserInfo(with email: String , completion: @escaping (Result<UserInfo, Error>) ->()) {
-        print(email)
         guard let url = URL(string: "http://127.0.0.1:5000/user_info/\(email)") else {return}
         URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
             guard let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
@@ -137,11 +136,87 @@ extension WebService {
             completion(.success(userInfo!))
         }).resume()
     }
+    
+    public func updateUserInfo(user_id: Int, user_name: String, user_email: String, user_password: String, completion: @escaping (Bool) -> Void) {
+        
+        let params = [
+            "name": user_name,
+            "email": user_email,
+            "password": user_password
+        ] as [String: Any]
+        guard let url = URL(string: "http://127.0.0.1:5000/user_info_update/\(user_id)") else {return}
+        let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = data
+        
+        
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, response, error in
+        
+            guard let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
+                completion(false)
+                return
+            }
+            completion(true)
+        }).resume()
+    }
+    
+    public func updateTopics(topics: [String], user_id: Int, completion: @escaping (Bool) -> ()) {
+        
+        var params = [
+            "topics": []
+        ] as [String: Any]
+        
+        for topic in topics {
+            let topicArray: [String: Any] = ["topic_name" : topic]
+            var topicsArray = params["topics"] as? [[String: Any]] ?? [[String: Any]]()
+            topicsArray.append(topicArray)
+            params["topics"] = topicsArray
+        }
+        let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
+        
+        guard let url = URL(string: "http://127.0.0.1:5000/update_topic/\(user_id)") else {return}
+        var urlRequest = URLRequest(url: url)
+        
+        urlRequest.httpBody = data
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, response, error in
+            guard let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
+                completion(false)
+                return
+            }
+            completion(true)
+        }).resume()
+    }
+    
+    public func updateLocation(user: UserInfo, completion: @escaping (Bool) -> ()) {
+        guard let location = user.user_location, let id = user.user_id else {return}
+        
+       let params = [
+            "location": location
+        ]
+        let data = try? JSONSerialization.data(withJSONObject: params, options: .init())
+        
+        guard let url = URL(string: "http://127.0.0.1:5000/update_location/\(id)") else {return}
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = data
+        urlRequest.httpMethod = "PUT"
+        
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, response, error in
+            guard let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
+                completion(false)
+                return
+            }
+            completion(true)
+        }).resume()
+    }
 }
-
-
-
-
 
 extension WebService {
     //Errors
@@ -154,15 +229,15 @@ extension WebService {
 
 extension WebService.WebServiceError: LocalizedError {
     public var errorDescription: String? {
-            switch self {
-            case .failedToRegister(let error):
-                return NSLocalizedString("\(error)", comment: "Error")
-            case .failedToFetch:
-                return NSLocalizedString("Verileri çekerken bir hata oluştu", comment: "failedToFetch")
-            case .failedToFetchUserInfo:
-                return NSLocalizedString("Haber konularını çekerken hata oluştu", comment: "failedToFetchUserInfo")
-            }
+        switch self {
+        case .failedToRegister(let error):
+            return NSLocalizedString("\(error)", comment: "Error")
+        case .failedToFetch:
+            return NSLocalizedString("Verileri çekerken bir hata oluştu", comment: "failedToFetch")
+        case .failedToFetchUserInfo:
+            return NSLocalizedString("Haber konularını çekerken hata oluştu", comment: "failedToFetchUserInfo")
         }
+    }
 }
 
 struct RegisterError: Decodable {

@@ -28,12 +28,13 @@ class RegisterVC: UIViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.clipsToBounds = true
         return scrollView
     }()
-
+    
     
     private let stackView: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 251/255, alpha: 1)
@@ -43,7 +44,7 @@ class RegisterVC: UIViewController {
         stackView.layer.borderColor = UIColor(red: 215/255, green: 218/255, blue: 235/255, alpha: 1).cgColor
         return stackView
     }()
-
+    
     
     private let nameTextfield: UITextField = {
         let textfield = UITextField()
@@ -92,7 +93,7 @@ class RegisterVC: UIViewController {
     }()
     
     private let registerButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("Kayıt ol", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "SFCompactDisplay-Semibold", size: 20)
@@ -104,7 +105,7 @@ class RegisterVC: UIViewController {
     }()
     
     private let signinLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         let attributedString = NSMutableAttributedString(string: "Bu uygulamaya üyeliğim var. Giriş Yap")
         attributedString.addAttribute(.link, value: "Giriş Yap", range: NSRange(location: 28, length: 9))
         label.attributedText = attributedString
@@ -116,7 +117,7 @@ class RegisterVC: UIViewController {
     }()
     
     private let orLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "OR"
         label.font = UIFont(name: "PlayfairDisplay-Black", size: 15.0)
         label.textColor = UIColor(red: 27/255, green: 36/255, blue: 92/255, alpha: 1)
@@ -136,7 +137,7 @@ class RegisterVC: UIViewController {
         separator.backgroundColor = UIColor(red: 215/255, green: 218/255, blue: 235/255, alpha: 1)
         return separator
     }()
-
+    
     let facebookButton = IconTextButton(frame: CGRect(x: 0, y: 0, width: 300 , height: 55))
     
     override func viewDidLoad() {
@@ -167,18 +168,21 @@ class RegisterVC: UIViewController {
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapSignIn))
         signinLabel.addGestureRecognizer(gesture)
-    
+        
+        let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
+        view.addGestureRecognizer(gestureHideKeyboard)
+        
         
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-      
+        
         scrollView.frame = view.bounds
         imageView.frame = scrollView.bounds
         
         let width = scrollView.width - 90
         
-        titleLabel.frame = CGRect(x: 45, y: scrollView.top + 142, width: width, height: 60)
+        titleLabel.frame = CGRect(x: 45, y: scrollView.top + 50, width: width, height: 60)
         stackView.frame = CGRect(x: 45, y: titleLabel.bottom + 35, width: width, height: 203)
         registerButton.frame = CGRect(x: 45, y: stackView.bottom + 15, width: width, height: 55)
         orLabel.frame = CGRect(x: 45, y: registerButton.bottom + 20, width: width, height: 35)
@@ -217,7 +221,7 @@ class RegisterVC: UIViewController {
     @objc private func didTapRegister() {
         print("Did tapped register button")
         guard let name = nameTextfield.text, let email = emailTextfield.text, let password = passwordTextfield.text, let location = Locale.current.regionCode else { return }
-    
+        
         let user = User(name: name, email: email, location: location, password: password)
         WebService.shared.createUser(user: user, completion: {result in
             switch result {
@@ -226,15 +230,20 @@ class RegisterVC: UIViewController {
                 UserDefaults.standard.setValue(user?.location, forKey: "regionCode")
                 DispatchQueue.main.async {
                     let vc = ChooseTopicVC()
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
+                    let nav = UINavigationController(rootViewController: vc)
+                    nav.modalPresentationStyle = .fullScreen
+                    self.present(nav, animated: true)
                 }
-              
+                
                 
             case .failure(let error):
                 print(error.localizedDescription)
             }
         })
+    }
+    
+    @objc private func hideKeyboard(){
+        view.endEditing(true)
     }
 }
 

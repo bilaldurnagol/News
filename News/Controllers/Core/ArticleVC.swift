@@ -34,38 +34,29 @@ class ArticleVC: UIViewController {
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //get feateured article. auto update in tableview
+        self.getFeaturedArticle()
         
-        if regionCode == nil {
-            guard let regionCode = Locale.current.regionCode else {return}
-            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
-            DispatchQueue.main.async {
-                self.getArticles(with: url, completion: {success in
-                    if success {print("OK!")}
-                    else {print("Fail!")}
-                })
-            }
-        }else {
-            guard let regionCode = regionCode else {return}
-            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
-            DispatchQueue.main.async {
-                self.getArticles(with: url, completion: {success in
-                    if success {print("OK!")}
-                    else {print("Fail!")}
-                })
-            }
-            
+        guard let regionCode = regionCode else {return}
+        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
+        DispatchQueue.main.async {
+            self.getArticles(with: url, completion: {success in
+                if success {print("OK!")}
+                else {print("Fail!")}
+            })
         }
-        
-        
-      
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        tableView.frame = CGRect(x: 25, y: view.safeAreaInsets.top, width: view.width - 27, height: view.height - 10)
+        tableView.frame = CGRect(x: 25,
+                                 y: view.safeAreaInsets.top,
+                                 width: view.width - 27,
+                                 height: view.height - 10)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,10 +77,8 @@ class ArticleVC: UIViewController {
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: false)
         }
-        //get feateured article. auto update in tableview
-        self.getFeaturedArticle()
+
     }
-    
     //Setup navigation bar
     private func setupNavBar() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) //UIImage.init(named: "transparent.png")
@@ -154,7 +143,10 @@ class ArticleVC: UIViewController {
     
     //MARK: -objc Funcs
     @objc private func didTapSettingsButton() {
-        print("Tapped settings bar button")
+        let vc = SettingsVC()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
 }
 
@@ -246,9 +238,9 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             let view = UIView()
             view.sizeToFit()
             view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
-            let titleLabel = UILabel(frame: CGRect(x: 0, y: 42, width: 250, height: 91))
+            let titleLabel = UILabel(frame: CGRect(x: 0, y: 22, width: 300, height: 91))
             titleLabel.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
-            titleLabel.text = "Choose your \ntopics"
+            titleLabel.text = "Konu başlığı \nseç"
             titleLabel.textAlignment = .left
             titleLabel.numberOfLines = 0
             titleLabel.font = UIFont(name: "SFCompactDisplay-Medium", size: 38)
@@ -262,7 +254,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
             let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 20))
             titleLabel.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
-            titleLabel.text = "Featured Article"
+            titleLabel.text = "En çok okunan"
             titleLabel.font = UIFont(name: "SFCompactDisplay-Light", size: 20)
             titleLabel.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
             view.addSubview(titleLabel)
@@ -273,7 +265,7 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             view.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
             let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 20))
             titleLabel.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
-            titleLabel.text = "For you"
+            titleLabel.text = "Senin için"
             titleLabel.font = UIFont(name: "SFCompactDisplay-Light", size: 20)
             titleLabel.textColor = UIColor(red: 38/255, green: 50/255, blue: 91/255, alpha: 1)
             view.addSubview(titleLabel)

@@ -16,7 +16,6 @@ class CollectionTableViewCell: UITableViewCell {
     
     static let identifier = "CollectionTableViewCell"
     
-    
     var collectionView: UICollectionView?
     private var topics: [String]?
     var delegate: CollectionTableViewCellDelegate?
@@ -86,12 +85,10 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     
 }
 
-
 extension CollectionTableViewCell: TopicsCollectionViewCellDelegate {
     func chooseTopic(articles: ArticleListViewModel) {
         if let delegate = self.delegate {
             delegate.chooseTopic(topic: articles)
         }
     }
-    
 }

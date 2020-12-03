@@ -49,12 +49,13 @@ struct Topic: Codable {
 
 struct UserInfo: Decodable {
     let user_id: Int?
-    let user_name: String?
-    let user_email: String?
-    let user_location: String?
-    let topics: [Topics]?
+    var user_name: String?
+    var user_email: String?
+    var user_password: String?
+    var user_location: String?
+    var topics: [Topics]?
 }
 
 struct Topics: Decodable {
-    let topic_name: String?
+    var topic_name: String?
 }
