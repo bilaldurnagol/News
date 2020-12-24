@@ -91,11 +91,11 @@ class FeaturedArticleTableViewCell: UITableViewCell {
         
     }
     
-    func configure(article: Article) {
-        self.featuredArticleTitleLabel.text = article.title
-        let urlToImage = article.url_to_image
+    func configure(article: Article?) {
+        self.featuredArticleTitleLabel.text = article?.title
+        let urlToImage = article?.url_to_image
         self.featuredArticleImageView.sd_setImage(with: URL(string:urlToImage ?? "url"), completed: nil)
-        self.featuredArticlePublishedAtLabel.text = article.published_at
+        self.featuredArticlePublishedAtLabel.text = article?.published_at
 
     }
     

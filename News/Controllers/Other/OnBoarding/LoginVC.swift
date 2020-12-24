@@ -124,11 +124,43 @@ class LoginVC: UIViewController {
     
     let facebookButton = IconTextButton(frame: CGRect(x: 0, y: 0, width: 300 , height: 55))
     
+    private let loginErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
+    }()
+    
+    private let validationErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.isHidden = true
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .systemRed
+        spinner.style = .large
+        return spinner
+    }()
+    
+    private var isValidEmail: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupNavBar()
         view.addSubview(scrollView)
+        scrollView.addSubview(spinner)
+        view.addSubview(loginErrorLabel)
+        view.addSubview(validationErrorLabel)
         scrollView.addSubview(imageView)
         scrollView.addSubview(titleLabel)
         scrollView.addSubview(stackView)
@@ -154,6 +186,7 @@ class LoginVC: UIViewController {
         
         let gestureHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
         view.addGestureRecognizer(gestureHideKeyboard)
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -170,19 +203,22 @@ class LoginVC: UIViewController {
         facebookButton.frame = CGRect(x: 45, y: orLabel.bottom + 20, width: width, height: 55)
         signUpLabel.frame = CGRect(x: 45, y: facebookButton.bottom + 23 , width: scrollView.width - 90, height: 20)
         
-        
         //seperator's
         self.seperatorViewEmail.translatesAutoresizingMaskIntoConstraints = false
         self.seperatorViewEmail.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 25).isActive = true
         self.seperatorViewEmail.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -25).isActive = true
         self.seperatorViewEmail.bottomAnchor.constraint(equalTo: seperatorViewEmail.topAnchor, constant: 1).isActive = true
         
-        
         self.seperatorViewName.translatesAutoresizingMaskIntoConstraints = false
         self.seperatorViewName.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 25).isActive = true
         self.seperatorViewName.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -25).isActive = true
         self.seperatorViewName.bottomAnchor.constraint(equalTo: seperatorViewName.topAnchor, constant: 1).isActive = true
         
+        loginErrorLabel.frame = CGRect(x: 0, y: view.bottom - 70, width: scrollView.width, height: 70)
+        validationErrorLabel.frame = CGRect(x: 0, y: view.top, width: view.width, height: 70)
+        
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.center = scrollView.center
     }
     
     //Setup navigation bar
@@ -192,10 +228,9 @@ class LoginVC: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         navigationController?.navigationBar.tintColor = .black
-        
     }
     
-    //objc
+    //MARK:- Objc funcs
     @objc private func didTapSignUp() {
         let vc = RegisterVC()
         vc.modalPresentationStyle = .fullScreen
@@ -203,39 +238,86 @@ class LoginVC: UIViewController {
     }
     
     @objc private func didTapLogin() {
-        print("Did tap login button")
         var topicArray = [String]()
+    
+        hideKeyboard()
+        spinner.startAnimating()
+        
         guard let email = emailTextfield.text, let password = passwordTextfield.text else {return}
-        WebService.shared.login(email: email, password: password, completion: { result in
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let userInfo):
-                guard let topics = userInfo.topics, let location = userInfo.user_location, let email = userInfo.user_email else {return}
-                
-                for topic in topics {
-                    let safeTopic = topic.topic_name
-                    topicArray.append(safeTopic!)
+        if isValidEmail {
+            emailTextfield.textColor = UIColor(red: 27/255, green: 36/255, blue: 92/255, alpha: 1.0)
+            DatabaseManager.shared.login(email: email, password: password, completion: {[weak self] result in
+                guard let strongSelf = self else {return}
+                switch result {
+                case .success(let user):
+                    guard let email = user.user_email,
+                          let topics = user.topics as? [Topics],
+                          let regionCode = user.user_location else {return}
+                    
+                    for topic in topics {
+                        let safeTopic = topic.topic_name
+                        topicArray.append(safeTopic!)
+                    }
+                    UserDefaults.standard.set(email, forKey: "currentUser")
+                    UserDefaults.standard.set(topicArray, forKey: "userTopics")
+                    UserDefaults.standard.set(regionCode, forKey: "regionCode")
+                    
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
+                        let vc = ArticleVC()
+                        let nav = UINavigationController(rootViewController: vc)
+                        nav.modalPresentationStyle = .fullScreen
+                        strongSelf.present(nav, animated: true)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
+                        strongSelf.loginErrorShow(text: "Kullanıcı giriş işleminde problem oluştu. Lütfen bilgilerinizi kontrol ediniz.",backgroundColor: .systemGreen)
+                    }
                 }
-                
-                UserDefaults.standard.setValue(topicArray, forKey: "chooseTopics")
-                UserDefaults.standard.setValue(email, forKey: "currentUser")
-                UserDefaults.standard.setValue(location, forKey: "regionCode")
-                
-                DispatchQueue.main.async {
-                    let vc = ArticleVC()
-                    let nav = UINavigationController(rootViewController: vc)
-                    nav.modalPresentationStyle = .fullScreen
-                    self.present(nav, animated: true)
-                }
+            })
+        }else {
+            loginErrorShow(text: "Girdiğiniz email geçerli değildir.", backgroundColor: .systemRed)
+            emailTextfield.textColor = .systemRed
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
             }
-        })
+        }
     }
     
+    //hide keyboard
     @objc private func hideKeyboard(){
         view.endEditing(true)
     }
+
+    
+    //MARK:- Validations Funcs
+    private func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: candidate)
+    }
+    //MARK:- Error Funcs
+    /// show login user error
+    private func loginErrorShow(text: String, backgroundColor: UIColor) {
+        loginErrorLabel.isHidden = false
+        loginErrorLabel.text = text
+        loginErrorLabel.backgroundColor = backgroundColor
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {[weak self] in
+            self?.loginErrorLabel.isHidden = true
+        })
+    }
+    
+    ///show textfields validation error
+    private func validationErrorShow(text: String) {
+        validationErrorLabel.isHidden = false
+        validationErrorLabel.text = text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+            self?.validationErrorLabel.isHidden = true
+        })
+    }
 }
+
 extension LoginVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextfield {
@@ -244,5 +326,18 @@ extension LoginVC: UITextFieldDelegate {
             didTapLogin()
         }
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == emailTextfield {
+            if !validateEmail(candidate: textField.text!) {
+                validationErrorShow(text: "Girdiğiniz email geçerli değildir.")
+                textField.textColor = .systemRed
+                isValidEmail = false
+            }else {
+                textField.textColor = UIColor(red: 27/255, green: 36/255, blue: 92/255, alpha: 1.0)
+                isValidEmail = true
+            }
+        }
     }
 }

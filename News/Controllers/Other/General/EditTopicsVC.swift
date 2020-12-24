@@ -8,13 +8,21 @@
 import UIKit
 
 class EditTopicsVC: UIViewController {
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .systemRed
+        spinner.style = .large
+        return spinner
+    }()
+    
     private let tableView: UITableView = {
        let tableView = UITableView()
         tableView.register(TopicsTableViewCell.self, forCellReuseIdentifier: TopicsTableViewCell.identifier)
         return tableView
     }()
     
-    private var user: UserInfo?
+    private var user: User?
     private var userTopicsArray: [Topics]?
     private let topicsArray: [String] = ["İş","Eğlence","Sağlık","Bilim","Spor","Teknoloji"]
     private var chooseTopicArray = [String]()
@@ -25,6 +33,7 @@ class EditTopicsVC: UIViewController {
         view.backgroundColor = UIColor(red: 247/255, green: 248/255, blue: 253/255, alpha: 1)
         setupNavBar()
         view.addSubview(tableView)
+        view.addSubview(spinner)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -38,9 +47,11 @@ class EditTopicsVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.center = view.center
 
     }
-    init(user: UserInfo) {
+    init(user: User) {
         super.init(nibName: nil, bundle: nil)
         self.user = user
         
@@ -74,24 +85,29 @@ class EditTopicsVC: UIViewController {
     @objc private func didTapExit() {
         dismiss(animated: true, completion: nil)
     }
+    
     @objc private func didTapSaveButton() {
-        guard let user_id = user?.user_id else {return}
-        
-        WebService.shared.updateTopics(topics: chooseTopicArray, user_id: user_id, completion: {result in
+        spinner.startAnimating()
+        guard let userID = user?.user_id else {return}
+        DatabaseManager.shared.updateTopics(topics: chooseTopicArray, userID: userID, completion: { [weak self] result in
+            guard let strongSelf = self else {return}
             if result {
-                print("success to update topic")
-                UserDefaults.standard.setValue(self.chooseTopicArray, forKey: "chooseTopics")
+                print("Success to update topic")
+                UserDefaults.standard.setValue(strongSelf.chooseTopicArray, forKey: "userTopics")
                 DispatchQueue.main.async {
-                    let vc = ArticleVC()
+                    strongSelf.spinner.stopAnimating()
+                    let vc = SettingsVC()
                     let nav = UINavigationController(rootViewController: vc)
                     nav.modalPresentationStyle = .fullScreen
-                    self.present(nav, animated: true)
+                    strongSelf.present(nav, animated: true)
                 }
             } else {
-                print("failed to update topic")
+                print("Failed to update topic")
+                DispatchQueue.main.async {
+                    strongSelf.spinner.stopAnimating()
+                }
             }
         })
-        
     }
 }
 
@@ -106,7 +122,7 @@ extension EditTopicsVC: UITableViewDelegate, UITableViewDataSource {
         let backgroundImage = UIImageView(frame: header.bounds)
         backgroundImage.image = UIImage(named: "settings_background")
         
-        let titleLabel = UILabel(frame: CGRect(x: 150, y: 69, width: view.width - 300, height: 30))
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 69, width: view.width, height: 30))
         titleLabel.text = "KATEGORİ"
         titleLabel.textAlignment = .center
         titleLabel.textColor = .white

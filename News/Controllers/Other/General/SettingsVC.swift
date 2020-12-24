@@ -31,7 +31,7 @@ class SettingsVC: UIViewController {
     }()
     
     private var data = [SettingsCell]()
-    private var user: UserInfo?
+    private var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,12 @@ class SettingsVC: UIViewController {
         configure()
         setupNavBar()
         guard let email = UserDefaults.standard.value(forKey: "currentUser") as? String else {return}
-        print(email)
-        WebService.shared.getUserInfo(with: email, completion: {result in
+        DatabaseManager.shared.getUserInfo(email: email, completion: {result in
             switch result {
-            case .success(let user):
-                self.user = user
             case .failure(let error):
                 print(error.localizedDescription)
+            case .success(let user):
+                self.user = user
             }
         })
         if email == "guest" {
@@ -54,7 +53,6 @@ class SettingsVC: UIViewController {
         } else {
             view.addSubview(tableView)
         }
-        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -88,7 +86,6 @@ class SettingsVC: UIViewController {
         data.append(SettingsCell(iconImage: "s_logout", title: "Çıkış", handler: {[weak self] in
             self?.didTapLogOut()
         }))
-    
     }
     
     //Setup navigation bar
@@ -130,7 +127,7 @@ class SettingsVC: UIViewController {
     private func didTapLogOut() {
         let actionSheet = UIAlertController(title: "Çıkış", message: "Çıkış yapmak istediğinize emin misiniz?", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Çıkış Yap", style: .destructive, handler: {_ in
-            UserDefaults.standard.setValue(nil, forKey: "chooseTopics")
+            UserDefaults.standard.setValue(nil, forKey: "userTopics")
             UserDefaults.standard.setValue(nil, forKey: "currentUser")
             UserDefaults.standard.setValue(nil, forKey: "regionCode")
             DispatchQueue.main.async {
@@ -151,9 +148,11 @@ class SettingsVC: UIViewController {
     
 
     @objc private func didTapExit(){
-        dismiss(animated: true, completion: nil)
+        let vc = ArticleVC()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
-    
     
     //Custom alert
     private func customAlert(title: String, message: String) {
@@ -169,7 +168,6 @@ class SettingsVC: UIViewController {
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
             }
-            
         }))
         alert.addAction(UIAlertAction(title: "Vazgeç", style: .destructive, handler: {_ in
                 let vc = ArticleVC()
@@ -178,9 +176,7 @@ class SettingsVC: UIViewController {
                 self.present(nav, animated: true)
         }))
         present(alert, animated: true)
-        
     }
-    
 }
 
 extension SettingsVC: UITableViewDelegate, UITableViewDataSource {

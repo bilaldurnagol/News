@@ -16,6 +16,13 @@ class ChooseTopicVC: UIViewController {
         return scrollView
     }()
     
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .systemRed
+        spinner.style = .large
+        return spinner
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Haber kategorilerinizi seçin"
@@ -38,8 +45,6 @@ class ChooseTopicVC: UIViewController {
         button.setTitleColor(.white, for: .normal)
         return button
     }()
-    
-//    var topicArray = ["Business","Entertainment","Health","Science","Sports","Technology"]
     var topicArray = ["İş","Eğlence","Sağlık","Bilim","Spor","Teknoloji"]
     var deselectedTopicArray = ["İş","Eğlence","Sağlık","Bilim","Spor","Teknoloji"]
     var chooseTopicsArray = [String]()
@@ -50,7 +55,7 @@ class ChooseTopicVC: UIViewController {
         view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(titleLabel)
-        
+        scrollView.addSubview(spinner)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 1
@@ -89,6 +94,8 @@ class ChooseTopicVC: UIViewController {
                                       y: collectionView!.bottom,
                                       width: scrollView.width - 90,
                                       height: 60)
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.center = scrollView.center
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -106,29 +113,38 @@ class ChooseTopicVC: UIViewController {
     
     //MARK: - @objc funcs
     
+    // add choose topics
     @objc private func didTapTopicAddButton() {
+        spinner.startAnimating()
         let email = UserDefaults.standard.value(forKey: "currentUser")
         self.safeChooseTopicsArray.append(contentsOf: chooseTopicsArray)
         if email != nil {
-            WebService.shared.addTopic(userEmail: email! as! String, topics: safeChooseTopicsArray, completion: {result in
-                if result {
-                    UserDefaults.standard.setValue(self.safeChooseTopicsArray, forKey: "chooseTopics")
+            DatabaseManager.shared.addTopic(email: email as! String, chooseTopicsArray: safeChooseTopicsArray, completion: {[weak self] result in
+                guard let strongSelf = self else {return}
+                switch result {
+                case .failure(let error):
                     DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
+                    }
+                    print(error)
+                case .success(_):
+                    UserDefaults.standard.set(strongSelf.safeChooseTopicsArray, forKey: "userTopics")
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
                         let vc = ArticleVC()
                         let nav = UINavigationController(rootViewController: vc)
                         nav.modalPresentationStyle = .fullScreen
-                        self.present(nav, animated: true)
+                        strongSelf.present(nav, animated: true)
                     }
-                } else {
-                    print("Failed to added topics")
                 }
             })
-        } else {
-            UserDefaults.standard.setValue(self.safeChooseTopicsArray, forKey: "chooseTopics")
+        }else {
+            UserDefaults.standard.setValue(self.safeChooseTopicsArray, forKey: "userTopics")
             UserDefaults.standard.setValue("guest", forKey: "currentUser")
             let location = Locale.current.regionCode
             UserDefaults.standard.setValue(location, forKey: "regionCode")
             DispatchQueue.main.async {
+                self.spinner.stopAnimating()
                 let vc = ArticleVC()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
@@ -138,6 +154,7 @@ class ChooseTopicVC: UIViewController {
     }
 }
 
+//MARK:- Collectionview funcs
 extension ChooseTopicVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

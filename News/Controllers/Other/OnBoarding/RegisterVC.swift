@@ -9,6 +9,35 @@ import UIKit
 
 class RegisterVC: UIViewController {
     
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .systemRed
+        spinner.style = .large
+        return spinner
+    }()
+    
+    private let validationErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.isHidden = true
+        label.textAlignment = .center
+        label.backgroundColor = .systemRed
+        label.numberOfLines = 0
+        return label
+    }()
+    private let registerErrorLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .systemGreen
+        label.text = "There was a problem signing in. Check your email and password or create an account."
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
+    }()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "bubbles_blur")
@@ -140,6 +169,9 @@ class RegisterVC: UIViewController {
     
     let facebookButton = IconTextButton(frame: CGRect(x: 0, y: 0, width: 300 , height: 55))
     
+    private var isValidEmail: Bool = false
+    private var isValidPassword: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -157,6 +189,9 @@ class RegisterVC: UIViewController {
         scrollView.addSubview(registerButton)
         scrollView.addSubview(facebookButton)
         scrollView.addSubview(signinLabel)
+        scrollView.addSubview(spinner)
+        view.addSubview(registerErrorLabel)
+        view.addSubview(validationErrorLabel)
         
         nameTextfield.delegate = self
         emailTextfield.delegate = self
@@ -201,6 +236,11 @@ class RegisterVC: UIViewController {
         self.seperatorViewName.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -25).isActive = true
         self.seperatorViewName.bottomAnchor.constraint(equalTo: seperatorViewName.topAnchor, constant: 1).isActive = true
         
+        registerErrorLabel.frame = CGRect(x: 0, y: view.bottom - 70, width: scrollView.width, height: 70)
+        validationErrorLabel.frame = CGRect(x: 0, y: view.top, width: scrollView.width, height: 70)
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.center = scrollView.center
+        
     }
     //Setup navigation bar
     private func setupNavBar() {
@@ -211,42 +251,96 @@ class RegisterVC: UIViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
-    //objc funcs
+    //MARK:- Error Funcs
+    ///show textfields validation error
+    private func validationErrorShow(text: String, height: CGFloat) {
+        validationErrorLabel.isHidden = false
+        validationErrorLabel.text = text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+            self?.validationErrorLabel.isHidden = true
+        })
+    }
+    /// show login user error
+    private func RegisterErrorShow(text: String) {
+        registerErrorLabel.isHidden = false
+        registerErrorLabel.text = text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {[weak self] in
+            self?.registerErrorLabel.isHidden = true
+        })
+    }
+    
+    //MARK:- Validations Funcs
+    private func validateEmail(candidate: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: candidate)
+    }
+    
+    private func validatePassword(candidate: String) -> Bool {
+        let passwordRegex = "(?=[^a-z]*[a-z])(?=[^0-9]*[0-9])[a-zA-Z0-9!@#$%^&*]{8,}"
+        return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: candidate)
+    }
+    
+    //MARK:- Objc funcs
+    
+    //user login func
     @objc private func didTapSignIn() {
         let vc = LoginVC()
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+    //create new user func
     @objc private func didTapRegister() {
-        print("Did tapped register button")
-        guard let name = nameTextfield.text, let email = emailTextfield.text, let password = passwordTextfield.text, let location = Locale.current.regionCode else { return }
+        hideKeyboard()
         
-        let user = User(name: name, email: email, location: location, password: password)
-        WebService.shared.createUser(user: user, completion: {result in
-            switch result {
-            case .success(let user):
-                UserDefaults.standard.setValue(email, forKey: "currentUser")
-                UserDefaults.standard.setValue(user?.location, forKey: "regionCode")
-                DispatchQueue.main.async {
-                    let vc = ChooseTopicVC()
-                    let nav = UINavigationController(rootViewController: vc)
-                    nav.modalPresentationStyle = .fullScreen
-                    self.present(nav, animated: true)
+        guard let name = nameTextfield.text,
+              let email = emailTextfield.text,
+              let password = passwordTextfield.text,
+              let regionCode = Locale.current.regionCode else {return}
+        
+        if isValidEmail && isValidPassword && !nameTextfield.text!.isEmpty {
+            spinner.startAnimating()
+            let user = User(user_id: nil,
+                               user_name: name,
+                               user_email: email,
+                               user_password: password,
+                               user_location: regionCode,
+                               topics: [Topics(topic_name: nil)])
+            DatabaseManager.shared.createNewUser(user: user, completion: {[weak self]result in
+                guard let strongSelf = self else {return}
+                switch result {
+                case .success(let user):
+                    guard let email = user.user_email,
+                          let regionCode = user.user_location else {return}
+                    UserDefaults.standard.set(email, forKey: "currentUser")
+                    UserDefaults.standard.set(regionCode, forKey: "regionCode")
+                    
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
+                        let vc = ChooseTopicVC()
+                        let nav = UINavigationController(rootViewController: vc)
+                        nav.modalPresentationStyle = .fullScreen
+                        strongSelf.present(nav, animated: true)
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
+                        strongSelf.RegisterErrorShow(text: error.localizedDescription)
+                    }
                 }
-                
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        })
+            })
+            
+        }else {
+            RegisterErrorShow(text: "Lütfen eksik veya hatalı bilgi girmeyiniz!")
+        }
     }
-    
+    //hide keyboard func
     @objc private func hideKeyboard(){
         view.endEditing(true)
     }
 }
 
+
+//MARK: - Textfield funcs
 extension RegisterVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == nameTextfield {
@@ -257,5 +351,27 @@ extension RegisterVC: UITextFieldDelegate {
             didTapRegister()
         }
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == emailTextfield {
+            if !validateEmail(candidate: textField.text!) {
+                validationErrorShow(text: "Girdiğiniz email geçerli değildir.", height: 20)
+                textField.textColor = .systemRed
+                isValidEmail = false
+            }else {
+                textField.textColor = UIColor(red: 27/255, green: 36/255, blue: 92/255, alpha: 1.0)
+                isValidEmail = true
+            }
+        }else if textField == passwordTextfield {
+            if !validatePassword(candidate: textField.text!) {
+                validationErrorShow(text: "Girdiğiniz email geçerli değildir. En az 8 karakter, büyük harf, küçük harf ve rakam içermelidir.", height: 70)
+                textField.textColor = .systemRed
+                isValidPassword = false
+            }else {
+                textField.textColor = UIColor(red: 27/255, green: 36/255, blue: 92/255, alpha: 1.0)
+                isValidPassword = true
+            }
+        }
     }
 }

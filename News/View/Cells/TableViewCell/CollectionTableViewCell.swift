@@ -9,7 +9,7 @@ import UIKit
 
 
 protocol CollectionTableViewCellDelegate {
-    func chooseTopic(topic: ArticleListViewModel )
+    func chooseTopic(topic: [Article] )
 }
 
 class CollectionTableViewCell: UITableViewCell {
@@ -44,7 +44,7 @@ class CollectionTableViewCell: UITableViewCell {
         super.layoutSubviews()
         collectionView?.frame = contentView.bounds
     }
-    func configure(topics: [String]) {
+    func configure(topics: [String]?) {
         self.topics = topics
         collectionView?.reloadData()
         
@@ -60,7 +60,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
         if topics?.count == 0 {
             return 0
         }else {
-            return topics!.count
+            return topics?.count ?? 0
         }
     }
     
@@ -86,7 +86,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
 }
 
 extension CollectionTableViewCell: TopicsCollectionViewCellDelegate {
-    func chooseTopic(articles: ArticleListViewModel) {
+    func chooseTopic(articles: [Article]) {
         if let delegate = self.delegate {
             delegate.chooseTopic(topic: articles)
         }

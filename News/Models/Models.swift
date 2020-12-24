@@ -1,13 +1,26 @@
 //
-//  Article.swift
+//  Models.swift
 //  News
 //
-//  Created by Bilal Durnagöl on 27.10.2020.
+//  Created by Bilal Durnagöl on 21.12.2020.
 //
 
 import Foundation
 
+//MARK:- User model
+struct User: Codable {
+    let user_id: Int?
+    var user_name: String?
+    var user_email: String?
+    var user_password: String?
+    var user_location: String?
+    let topics: [Topics]?
+}
+struct Topics: Codable {
+    let topic_name: String?
+}
 
+//MARK:- Article model
 struct ArticleList: Decodable {
     let articles: [Article]
 }
@@ -25,7 +38,6 @@ struct Article: Decodable {
     let title: String?
     let url: String?
     let url_to_image: String?
-
 }
 
 struct Source: Decodable, Any {
@@ -34,28 +46,7 @@ struct Source: Decodable, Any {
 }
 
 
-struct User: Codable {
-    let name: String?
-    let email: String?
-    let location: String?
-    let password: String?
-    
-}
-
-struct Topic: Codable {
-    var topic_name: String?
-}
-
-
-struct UserInfo: Decodable {
-    let user_id: Int?
-    var user_name: String?
-    var user_email: String?
-    var user_password: String?
-    var user_location: String?
-    var topics: [Topics]?
-}
-
-struct Topics: Decodable {
-    var topic_name: String?
+//MARK:- Database message
+struct DatabaseMessage: Decodable {
+    let message: String?
 }

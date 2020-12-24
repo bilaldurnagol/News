@@ -28,39 +28,7 @@ extension WebService {
     
     //MARK: - USERS FUNCS
     
-    //Create new user
-    public func createUser(user: User, completion: @escaping (Result<User?, Error>) -> Void) {
-        guard let name = user.name, let email = user.email, let location = user.location, let password = user.password else {return}
-        
-        let params = [
-            "name": name,
-            "email": email,
-            "location": location,
-            "password": password
-        ] as [String: Any]
-        do {
-            guard let url = URL(string: "http://127.0.0.1:5000/register") else {return}
-            var urlRequest = URLRequest(url: url)
-            urlRequest.httpMethod = "POST"
-            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            let data = try JSONSerialization.data(withJSONObject: params, options: .init())
-            urlRequest.httpBody = data
-            URLSession.shared.dataTask(with: urlRequest, completionHandler: {data, reponse, error in
-                guard let httpResponse = reponse as? HTTPURLResponse, httpResponse.statusCode == 200, let jsonData = data else {
-                    guard let jsonError = try? JSONDecoder().decode(RegisterError.self, from: data!) else {return}
-                    let newError = WebServiceError.failedToRegister(jsonError.error)
-                    completion(.failure(newError))
-                    return
-                }
-                print(String(data: jsonData, encoding: .utf8)!)
-                completion(.success(user))
-            }).resume()
-            
-            
-        } catch  {
-            completion(.failure(WebServiceError.failedToFetch))
-        }
-    }
+  
     
     //add topics
     public func addTopic(userEmail: String, topics: [String],  completion: @escaping (Bool) -> ()) {
@@ -93,7 +61,7 @@ extension WebService {
     }
     
     //login
-    public func login(email: String, password: String, completion: @escaping (Result<UserInfo, Error>) -> ()) {
+    public func login(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
         let params = [
             "email": email,
             "password": password
@@ -125,14 +93,14 @@ extension WebService {
         }).resume()
     }
     
-    public func getUserInfo(with email: String , completion: @escaping (Result<UserInfo, Error>) ->()) {
+    public func getUserInfo(with email: String , completion: @escaping (Result<User, Error>) ->()) {
         guard let url = URL(string: "http://127.0.0.1:5000/user_info/\(email)") else {return}
         URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
             guard let urlResponse = response as? HTTPURLResponse, urlResponse.statusCode == 200 else {
                 completion(.failure(WebServiceError.failedToFetchUserInfo))
                 return
             }
-            let userInfo = try? JSONDecoder().decode(UserInfo.self, from: data!)
+            let userInfo = try? JSONDecoder().decode(User.self, from: data!)
             completion(.success(userInfo!))
         }).resume()
     }
@@ -193,9 +161,8 @@ extension WebService {
         }).resume()
     }
     
-    public func updateLocation(user: UserInfo, completion: @escaping (Bool) -> ()) {
+    public func updateLocation(user: User, completion: @escaping (Bool) -> ()) {
         guard let location = user.user_location, let id = user.user_id else {return}
-        
        let params = [
             "location": location
         ]

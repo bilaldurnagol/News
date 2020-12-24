@@ -51,7 +51,7 @@ class ArticlesTableViewCell: UITableViewCell {
         contentView.addSubview(articleImageView)
         contentView.addSubview(articleTitleLabel)
         contentView.addSubview(articlePublishedAtLabel)
-       
+        
         
     }
     
@@ -76,30 +76,30 @@ class ArticlesTableViewCell: UITableViewCell {
                                                height: 20)
     }
     
-    public func configure(article: Article) {
-        articleTitleLabel.text = article.title
-        articlePublishedAtLabel.text = article.published_at
+    public func configure(article: Article?) {
+        articleTitleLabel.text = article?.title
+        articlePublishedAtLabel.text = article?.published_at
         
-        if article.url_to_image == nil {
+        if article?.url_to_image == nil {
             articleImageView.image = UIImage(named: "newsLogo")
         }else {
-            articleImageView.sd_setImage(with: URL(string: article.url_to_image ?? ""), completed: nil)
+            articleImageView.sd_setImage(with: URL(string: article?.url_to_image ?? ""), completed: nil)
         }
-     
+        
     }
     
 }
 
 
 /*
-SF Compact Display
-== SFCompactDisplay-Regular
-== SFCompactDisplay-Ultralight
-== SFCompactDisplay-Thin
-== SFCompactDisplay-Light
-== SFCompactDisplay-Medium
-== SFCompactDisplay-Semibold
-== SFCompactDisplay-Bold
-== SFCompactDisplay-Heavy
-== SFCompactDisplay-Black
-*/
+ SF Compact Display
+ == SFCompactDisplay-Regular
+ == SFCompactDisplay-Ultralight
+ == SFCompactDisplay-Thin
+ == SFCompactDisplay-Light
+ == SFCompactDisplay-Medium
+ == SFCompactDisplay-Semibold
+ == SFCompactDisplay-Bold
+ == SFCompactDisplay-Heavy
+ == SFCompactDisplay-Black
+ */

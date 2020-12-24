@@ -49,7 +49,7 @@ class SettingsTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         settingImage.frame = CGRect(x: 24, y: 20, width: 60, height: 60)
-        titleLabel.frame = CGRect(x: settingImage.right + 25, y: 40, width: 200, height: 24)
+        titleLabel.frame = CGRect(x: settingImage.right + 25, y: 40, width: 200, height: 30)
         nextButton.frame = CGRect(x: contentView.width - 100, y: 0, width: 100, height: 100)
         
         

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TopicsCollectionViewCellDelegate {
-    func chooseTopic(articles: ArticleListViewModel)
+    func chooseTopic(articles: [Article])
 }
 
 class TopicsCollectionViewCell: UICollectionViewCell {
@@ -16,7 +16,7 @@ class TopicsCollectionViewCell: UICollectionViewCell {
     static let identifier = "TopicsCollectionViewCell"
     var topicArticleList: [Article]?
     var delegate: TopicsCollectionViewCellDelegate?
-    var topicArticleListVM: ArticleListViewModel!
+    var articles: [Article]?
     private let regionCode = UserDefaults.standard.value(forKey: "regionCode")
     
     let topicButton: UIButton = {
@@ -26,7 +26,7 @@ class TopicsCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    
+    private let localhost = "http://34.76.59.104"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -91,45 +91,24 @@ class TopicsCollectionViewCell: UICollectionViewCell {
         default:
             print("Empty")
         }
-        
-        if regionCode == nil {
-            guard let regionCode = Locale.current.regionCode else {return}
-            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/\(safeTopic.lowercased())") else {
-                return
-            }
-            
-            WebService.shared.getArticles(url: url, completion: {result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let articles):
-                    if let articles = articles {
-                        self.topicArticleListVM = ArticleListViewModel(articles: articles)
-                        if let delegate = self.delegate {
-                            delegate.chooseTopic(articles: self.topicArticleListVM!)
-                        }
-                    }
+        guard let regionCode = regionCode else {return}
+        getArticles(url: "\(localhost)/articles/\(regionCode)/\(safeTopic.lowercased())")
+    }
+    
+    //get all articles
+    private func getArticles(url: String) {
+        DatabaseManager.shared.getArticles(url: url, completion: {[weak self] result in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case.success(let articles):
+                guard let articles = articles else {return}
+                strongSelf.articles = articles
+                if let delegate = strongSelf.delegate {
+                    delegate.chooseTopic(articles: strongSelf.articles!)
                 }
-            })
-        } else {
-            guard let safeRegionCode = regionCode else {return}
-            guard let url = URL(string: "http://127.0.0.1:5000/articles/\(safeRegionCode)/\(safeTopic.lowercased())") else {
-                return
             }
-            
-            WebService.shared.getArticles(url: url, completion: {result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let articles):
-                    if let articles = articles {
-                        self.topicArticleListVM = ArticleListViewModel(articles: articles)
-                        if let delegate = self.delegate {
-                            delegate.chooseTopic(articles: self.topicArticleListVM!)
-                        }
-                    }
-                }
-            })
-        }
+        })
     }
 }

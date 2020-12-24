@@ -9,19 +9,27 @@ import UIKit
 
 class EditLocationVC: UIViewController {
     
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .systemRed
+        spinner.style = .large
+        return spinner
+    }()
+    
     private let tableView: UITableView = {
-       let tableView = UITableView()
+        let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
     
     private let locationArray: [String] = ["TR", "US"]
     
-    var user: UserInfo?
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+        view.addSubview(spinner)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -37,9 +45,11 @@ class EditLocationVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        spinner.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        spinner.center = view.center
     }
     
-    init(user: UserInfo) {
+    init(user: User) {
         super.init(nibName: nil, bundle: nil)
         self.user = user
     }
@@ -60,30 +70,34 @@ class EditLocationVC: UIViewController {
         navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
+    //MARK:- Objc funcs
+    
+    //exit button
     @objc private func didTapExit() {
         dismiss(animated: true, completion: nil)
     }
+    //save new location
     @objc private func didTapSaveButton() {
-        
-        WebService.shared.updateLocation(user: user!, completion: {result in
+        spinner.startAnimating()
+        DatabaseManager.shared.updateLocation(user: user, completion: { [weak self] result in
+            guard let strongSelf = self else {return}
             if result {
-                guard let location = self.user?.user_location else {return}
-                print("success to update location")
+                print("success to update user location")
+                guard let location = strongSelf.user?.user_location else {return}
                 UserDefaults.standard.setValue(location, forKey: "regionCode")
                 DispatchQueue.main.async {
+                    strongSelf.spinner.stopAnimating()
                     let vc = ArticleVC()
                     let nav = UINavigationController(rootViewController: vc)
                     nav.modalPresentationStyle = .fullScreen
-                    self.present(nav, animated: true)
+                    strongSelf.present(nav, animated: true)
                 }
             }else {
                 print("failed to update location")
+                strongSelf.spinner.stopAnimating()
             }
-            
         })
-        
     }
-    
 }
 
 extension EditLocationVC: UITableViewDelegate, UITableViewDataSource {
@@ -97,7 +111,7 @@ extension EditLocationVC: UITableViewDelegate, UITableViewDataSource {
         let backgroundImage = UIImageView(frame: header.bounds)
         backgroundImage.image = UIImage(named: "settings_background")
         
-        let titleLabel = UILabel(frame: CGRect(x: 150, y: 69, width: view.width - 300, height: 30))
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 69, width: view.width, height: 30))
         titleLabel.text = "KONUM"
         titleLabel.textAlignment = .center
         titleLabel.textColor = .white
@@ -128,7 +142,6 @@ extension EditLocationVC: UITableViewDelegate, UITableViewDataSource {
             cell.accessoryType = .none
         }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        
         let selectedLocation = locationArray[indexPath.row]
         user?.user_location = selectedLocation
         navigationItem.rightBarButtonItem?.isEnabled = true

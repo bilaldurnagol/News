@@ -8,13 +8,6 @@
 import UIKit
 
 class ArticleVC: UIViewController {
-    
-    private var articleList: [Article]?
-    private var topicArray = UserDefaults.standard.value(forKey: "chooseTopics")
-    private var regionCode = UserDefaults.standard.value(forKey: "regionCode")
-    private var articleListVM: ArticleListViewModel!
-    private var featuredArticle: [Article]?
-    
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(CollectionTableViewCell.self, forCellReuseIdentifier: CollectionTableViewCell.identifier)
@@ -24,31 +17,29 @@ class ArticleVC: UIViewController {
     }()
     let customBackgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
     
+    private var topicArray = UserDefaults.standard.value(forKey: "userTopics")
+    private var regionCode = UserDefaults.standard.value(forKey: "regionCode")
+    private var currentUser = UserDefaults.standard.value(forKey: "currentUser")
+    
+    private var articles: [Article]?
+    private var featuredArticle: [Article]?
+    
+    private let localhost = "http://34.76.59.104"
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
         view.backgroundColor = customBackgroundColor
         view.addSubview(tableView)
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //get feateured article. auto update in tableview
-        self.getFeaturedArticle()
         
         guard let regionCode = regionCode else {return}
-        guard let url = URL(string: "http://127.0.0.1:5000/articles/\(regionCode)/general")else {return}
-        DispatchQueue.main.async {
-            self.getArticles(with: url, completion: {success in
-                if success {print("OK!")}
-                else {print("Fail!")}
-            })
-        }
+        getArticles(url: "\(localhost)/articles/\(regionCode)/general")
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,15 +61,20 @@ class ArticleVC: UIViewController {
             present(vc, animated: false)
         }
         //Check isnewuser for onboarding
-        let login = UserDefaults.standard.value(forKey: "currentUser")
-        if login == nil {
+        let currentUser = UserDefaults.standard.value(forKey: "currentUser")
+        if currentUser == nil {
             let vc = OnboardingVC()
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: false)
         }
-
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let regionCode = regionCode else {return}
+        getFeaturedArticle(url: "\(localhost)/featured_article/\(regionCode)")
+    }
+    
     //Setup navigation bar
     private func setupNavBar() {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) //UIImage.init(named: "transparent.png")
@@ -89,56 +85,40 @@ class ArticleVC: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(didTapSettingsButton))
     }
     
-    private func getArticles(with url: URL, completion: @escaping (Bool) -> ()) {
-        WebService.shared.getArticles(url: url, completion: {result in
+    //MARK:- Article Funcs
+    
+    //get all articles
+    private func getArticles(url: String) {
+        DatabaseManager.shared.getArticles(url: url, completion: {[weak self] result in
+            guard let strongSelf = self else {return}
             switch result {
             case .failure(let error):
-                print(error)
-                completion(false)
-            case .success(let articles):
-                if let articles = articles {
-                    self.articleListVM = ArticleListViewModel(articles: articles)
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                print(error.localizedDescription)
+            case.success(let articles):
+                guard let articles = articles else {return}
+                strongSelf.articles = articles
+                DispatchQueue.main.async {
+                    strongSelf.tableView.reloadData()
                 }
-                completion(true)
             }
         })
     }
-    private func getFeaturedArticle() {
-        //if isempty regioncode
-        if regionCode == nil {
-            guard let newRegionCode = Locale.current.regionCode else {return}
-            let urlString = "http://127.0.0.1:5000/featured_article/\(newRegionCode)"
-            guard let url = URL(string: urlString) else { return }
-            WebService.shared.getArticles(url: url, completion: {result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let featuredArticle):
-                    self.featuredArticle = featuredArticle
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+    
+    //get featured article
+    private func getFeaturedArticle(url: String) {
+        DatabaseManager.shared.getFeaturedArticle(url: url, completion: {[weak self] result in
+            guard let strongSelf = self else {return}
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let article):
+                guard let featuredArticle = article else {return}
+                strongSelf.featuredArticle = featuredArticle
+                DispatchQueue.main.async {
+                    strongSelf.tableView.reloadData()
                 }
-            })
-        }else {
-            guard let regionCode = regionCode else {return}
-            let urlString = "http://127.0.0.1:5000/featured_article/\(regionCode)"
-            guard let url = URL(string: urlString) else { return }
-            WebService.shared.getArticles(url: url, completion: {result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let featuredArticle):
-                    self.featuredArticle = featuredArticle
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            })
-        }
+            }
+        })
     }
     
     //MARK: -objc Funcs
@@ -155,17 +135,16 @@ class ArticleVC: UIViewController {
 extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.articleListVM == nil ? 0 : self.articleListVM.numberOfSection
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if section == 0 {
             return 1
         }else if section == 1 {
             return 1
-        } else {
-            return self.articleListVM.numberOfRowsInSection(section)
+        }else {
+            return articles?.count ?? 0
         }
     }
     
@@ -173,22 +152,20 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CollectionTableViewCell.identifier,
                                                      for: indexPath) as! CollectionTableViewCell
-            cell.configure(topics: topicArray as! [String])
+            cell.configure(topics: topicArray as? [String])
             cell.delegate = self
             return cell
-            
         }else if indexPath.section == 1 {
             let featuredArticle = self.featuredArticle?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: FeaturedArticleTableViewCell.identifier,
                                                      for: indexPath) as! FeaturedArticleTableViewCell
-            cell.configure(article: featuredArticle ?? articleListVM.articles[indexPath.row])
+            cell.configure(article: featuredArticle)
             return cell
-            
-        } else {
-            let articleVM = articleListVM.articleAtIndex(indexPath.row)
+        }else {
+            let article = articles?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: ArticlesTableViewCell.identifier,
                                                      for: indexPath) as! ArticlesTableViewCell
-            cell.configure(article: articleVM)
+            cell.configure(article: article)
             return cell
         }
     }
@@ -198,19 +175,18 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 1 {
             let featuredArticle = self.featuredArticle?[indexPath.row]
-            let vc = ShowArticleVC(article: featuredArticle ?? articleListVM.articles[indexPath.row])
+            let vc = ShowArticleVC(article: featuredArticle)
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
         }else {
-            let articleVM = articleListVM.articleAtIndex(indexPath.row)
-            let vc = ShowArticleVC(article: articleVM)
+            let article = articles?[indexPath.row]
+            let vc = ShowArticleVC(article: article)
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
         }
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -222,7 +198,6 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
             return 130
         }
     }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 150
@@ -275,13 +250,14 @@ extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ArticleVC: CollectionTableViewCellDelegate {
-    func chooseTopic(topic: ArticleListViewModel) {
-        self.articleListVM = topic
+    func chooseTopic(topic: [Article]) {
+        self.articles = topic
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
 }
+
 /*
  SF Compact Display
  == SFCompactDisplay-Regular
