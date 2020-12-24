@@ -14,7 +14,6 @@
 		B51381822548667A00D7A6FB /* ConnectionControlVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51381812548667A00D7A6FB /* ConnectionControlVC.swift */; };
 		B51381852548677C00D7A6FB /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51381842548677C00D7A6FB /* NetworkMonitor.swift */; };
 		B526194F2548221A00F54A31 /* ArticleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B526194E2548221A00F54A31 /* ArticleVC.swift */; };
-		B52619522548238A00F54A31 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619512548238A00F54A31 /* WebService.swift */; };
 		B52619552548241100F54A31 /* ShowArticleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619542548241100F54A31 /* ShowArticleVC.swift */; };
 		B526195A2548248200F54A31 /* ArticlesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52619592548248200F54A31 /* ArticlesTableViewCell.swift */; };
 		B526195E254824A700F54A31 /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B526195D254824A700F54A31 /* CollectionTableViewCell.swift */; };
@@ -63,7 +62,6 @@
 		B51381812548667A00D7A6FB /* ConnectionControlVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionControlVC.swift; sourceTree = "<group>"; };
 		B51381842548677C00D7A6FB /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		B526194E2548221A00F54A31 /* ArticleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleVC.swift; sourceTree = "<group>"; };
-		B52619512548238A00F54A31 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		B52619542548241100F54A31 /* ShowArticleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowArticleVC.swift; sourceTree = "<group>"; };
 		B52619592548248200F54A31 /* ArticlesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesTableViewCell.swift; sourceTree = "<group>"; };
 		B526195D254824A700F54A31 /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 		B56495DE254819BD0036934E /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				B52619512548238A00F54A31 /* WebService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -461,7 +458,6 @@
 				B5656B7025751E7C00B45C9E /* SettingsTableViewCell.swift in Sources */,
 				B56495BD2548142D0036934E /* AppDelegate.swift in Sources */,
 				B52619552548241100F54A31 /* ShowArticleVC.swift in Sources */,
-				B52619522548238A00F54A31 /* WebService.swift in Sources */,
 				B51381822548667A00D7A6FB /* ConnectionControlVC.swift in Sources */,
 				B592A2B72591358F00B4CE22 /* Models.swift in Sources */,
 				B505EECC25778899007D1082 /* EditTopicsVC.swift in Sources */,
