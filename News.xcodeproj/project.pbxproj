@@ -37,6 +37,11 @@
 		B572CF77256FA5A8005B63DE /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B572CF76256FA5A8005B63DE /* LoginVC.swift */; };
 		B589AAB4254C057800A9D5C3 /* RegisterTopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589AAB3254C057800A9D5C3 /* RegisterTopicCollectionViewCell.swift */; };
 		B592A2B72591358F00B4CE22 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B592A2B62591358F00B4CE22 /* Models.swift */; };
+		B5A46898260A213400A0D62D /* screenshot_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A46897260A213400A0D62D /* screenshot_1.png */; };
+		B5A4689E260A215200A0D62D /* screenshot_2.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A4689D260A215200A0D62D /* screenshot_2.png */; };
+		B5A468A1260A215D00A0D62D /* screenshot_3.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A468A0260A215D00A0D62D /* screenshot_3.png */; };
+		B5A468A5260A22CC00A0D62D /* screenshot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5A468A4260A22CC00A0D62D /* screenshot.jpg */; };
+		B5A468A8260A239900A0D62D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A468A7260A239900A0D62D /* logo.png */; };
 		B5ACD3E925724B8C00105119 /* IconTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACD3E825724B8C00105119 /* IconTextButton.swift */; };
 		B5B88A0D25497ACF00813D38 /* SF-Compact-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0425497ACE00813D38 /* SF-Compact-Display-Black.otf */; };
 		B5B88A0E25497ACF00813D38 /* SF-Compact-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5B88A0525497ACE00813D38 /* SF-Compact-Display-Bold.otf */; };
@@ -86,6 +91,11 @@
 		B572CF76256FA5A8005B63DE /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginVC.swift; path = News/Controllers/Other/OnBoarding/LoginVC.swift; sourceTree = SOURCE_ROOT; };
 		B589AAB3254C057800A9D5C3 /* RegisterTopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		B592A2B62591358F00B4CE22 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		B5A46897260A213400A0D62D /* screenshot_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot_1.png; sourceTree = "<group>"; };
+		B5A4689D260A215200A0D62D /* screenshot_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot_2.png; sourceTree = "<group>"; };
+		B5A468A0260A215D00A0D62D /* screenshot_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot_3.png; sourceTree = "<group>"; };
+		B5A468A4260A22CC00A0D62D /* screenshot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screenshot.jpg; sourceTree = "<group>"; };
+		B5A468A7260A239900A0D62D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		B5ACD3E825724B8C00105119 /* IconTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextButton.swift; sourceTree = "<group>"; };
 		B5B88A0425497ACE00813D38 /* SF-Compact-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Black.otf"; sourceTree = "<group>"; };
 		B5B88A0525497ACE00813D38 /* SF-Compact-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Display-Bold.otf"; sourceTree = "<group>"; };
@@ -172,6 +182,7 @@
 		B56495B02548142D0036934E = {
 			isa = PBXGroup;
 			children = (
+				B5A46896260A212500A0D62D /* githubImage */,
 				B56495BB2548142D0036934E /* News */,
 				B56495BA2548142D0036934E /* Products */,
 				1F643BF7A133F6888500E5F0 /* Pods */,
@@ -299,6 +310,18 @@
 			path = Login_Register;
 			sourceTree = "<group>";
 		};
+		B5A46896260A212500A0D62D /* githubImage */ = {
+			isa = PBXGroup;
+			children = (
+				B5A468A7260A239900A0D62D /* logo.png */,
+				B5A468A4260A22CC00A0D62D /* screenshot.jpg */,
+				B5A468A0260A215D00A0D62D /* screenshot_3.png */,
+				B5A4689D260A215200A0D62D /* screenshot_2.png */,
+				B5A46897260A213400A0D62D /* screenshot_1.png */,
+			);
+			path = githubImage;
+			sourceTree = "<group>";
+		};
 		B5B88A0325497A9F00813D38 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,16 +398,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5A468A1260A215D00A0D62D /* screenshot_3.png in Resources */,
 				B5503472254FE85100B4D597 /* GoogleService-Info.plist in Resources */,
 				B5B88A1025497ACF00813D38 /* SF-Compact-Display-Thin.otf in Resources */,
 				B5B88A1525497ACF00813D38 /* SF-Compact-Display-Heavy.otf in Resources */,
 				B56495C9254814310036934E /* LaunchScreen.storyboard in Resources */,
 				B572CF60256F95BB005B63DE /* PlayfairDisplay-Black.ttf in Resources */,
 				B5B88A1125497ACF00813D38 /* SF-Compact-Display-Medium.otf in Resources */,
+				B5A4689E260A215200A0D62D /* screenshot_2.png in Resources */,
 				B5B88A0F25497ACF00813D38 /* SF-Compact-Display-Ultralight.otf in Resources */,
 				B5B88A1325497ACF00813D38 /* SF-Compact-Display-Semibold.otf in Resources */,
+				B5A46898260A213400A0D62D /* screenshot_1.png in Resources */,
 				B5B88A0D25497ACF00813D38 /* SF-Compact-Display-Black.otf in Resources */,
 				B5B88A1225497ACF00813D38 /* SF-Compact-Display-Regular.otf in Resources */,
+				B5A468A5260A22CC00A0D62D /* screenshot.jpg in Resources */,
+				B5A468A8260A239900A0D62D /* logo.png in Resources */,
 				B56495C6254814310036934E /* Assets.xcassets in Resources */,
 				B5B88A0E25497ACF00813D38 /* SF-Compact-Display-Bold.otf in Resources */,
 				B5B88A1425497ACF00813D38 /* SF-Compact-Display-Light.otf in Resources */,
