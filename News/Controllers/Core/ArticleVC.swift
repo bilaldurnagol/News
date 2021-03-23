@@ -15,6 +15,7 @@ class ArticleVC: UIViewController {
         tableView.register(ArticlesTableViewCell.self, forCellReuseIdentifier: ArticlesTableViewCell.identifier)
         return tableView
     }()
+    
     let customBackgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
     
     private var topicArray = UserDefaults.standard.value(forKey: "userTopics")
@@ -24,8 +25,7 @@ class ArticleVC: UIViewController {
     private var articles: [Article]?
     private var featuredArticle: [Article]?
     
-    private let localhost = "http://34.76.59.104"
-    
+    private let localhost = "host"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,8 +130,7 @@ class ArticleVC: UIViewController {
     }
 }
 
-
-//MARK: - Tableview configure
+//MARK: - Tableview setup
 extension ArticleVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {

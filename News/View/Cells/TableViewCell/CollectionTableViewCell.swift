@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 protocol CollectionTableViewCellDelegate {
     func chooseTopic(topic: [Article] )
 }
@@ -80,9 +79,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 5
-    }
-    
-    
+    }  
 }
 
 extension CollectionTableViewCell: TopicsCollectionViewCellDelegate {

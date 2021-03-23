@@ -116,7 +116,7 @@ class ShowArticleVC: UIViewController {
     var urlToImage: String?
     var articleID: Int?
     var articleCount: Int?
-    private let localhost = "http://34.76.59.104"
+    private let localhost = "host"
     
     init(article: Article? ) {
         super.init(nibName: nil, bundle: nil)

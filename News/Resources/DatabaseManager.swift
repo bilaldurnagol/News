@@ -10,7 +10,7 @@ import Foundation
 
 class DatabaseManager {
     static let shared = DatabaseManager()
-    let localhost: String = "http://34.76.59.104"
+    let localhost: String = "host"
     
     //MARK:- Account funcs
     

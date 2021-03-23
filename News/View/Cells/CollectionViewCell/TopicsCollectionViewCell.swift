@@ -26,12 +26,13 @@ class TopicsCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    private let localhost = "http://34.76.59.104"
+    private let localhost = "host"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(topicButton)
         contentView.backgroundColor = UIColor(red: 238/255, green: 240/255, blue: 249/255, alpha: 1)
+        
         topicButton.addTarget(self, action: #selector(didTapTopicButton), for: .touchUpInside)
     }
     
@@ -94,6 +95,7 @@ class TopicsCollectionViewCell: UICollectionViewCell {
         guard let regionCode = regionCode else {return}
         getArticles(url: "\(localhost)/articles/\(regionCode)/\(safeTopic.lowercased())")
     }
+    
     
     //get all articles
     private func getArticles(url: String) {

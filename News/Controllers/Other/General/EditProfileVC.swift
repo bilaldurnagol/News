@@ -112,31 +112,31 @@ class EditProfileVC: UIViewController {
     @objc private func didTapSaveButton() {
         hideKeyboard()
         if isValidPassword ?? true, isValidEmail ?? true {
-        spinner.startAnimating()
-        let newUserInfo = user
-        guard let id = newUserInfo?.user_id,
-              let name = newUserInfo?.user_name,
-              let email = newUserInfo?.user_email,
-              let password = newUserInfo?.user_password else {return}
-        DatabaseManager.shared.editProfile(userID: id, userName: name, userEmail: email, userPassword: password, completion: {[weak self] result in
-            guard let strongSelf = self else {return}
-            if result {
-                print("Success to edit profile")
-                UserDefaults.standard.set(email, forKey: "currentUser")
-                DispatchQueue.main.async {
-                    strongSelf.spinner.stopAnimating()
-                    let vc = SettingsVC()
-                    let nav = UINavigationController(rootViewController: vc)
-                    nav.modalPresentationStyle = .fullScreen
-                    strongSelf.present(nav, animated: true)
+            spinner.startAnimating()
+            let newUserInfo = user
+            guard let id = newUserInfo?.user_id,
+                  let name = newUserInfo?.user_name,
+                  let email = newUserInfo?.user_email,
+                  let password = newUserInfo?.user_password else {return}
+            DatabaseManager.shared.editProfile(userID: id, userName: name, userEmail: email, userPassword: password, completion: {[weak self] result in
+                guard let strongSelf = self else {return}
+                if result {
+                    print("Success to edit profile")
+                    UserDefaults.standard.set(email, forKey: "currentUser")
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
+                        let vc = SettingsVC()
+                        let nav = UINavigationController(rootViewController: vc)
+                        nav.modalPresentationStyle = .fullScreen
+                        strongSelf.present(nav, animated: true)
+                    }
+                }else {
+                    print("Failed to edit profile")
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.stopAnimating()
+                    }
                 }
-            }else {
-                print("Failed to edit profile")
-                DispatchQueue.main.async {
-                    strongSelf.spinner.stopAnimating()
-                }
-            }
-        })
+            })
         }else {
             if !(isValidPassword ?? true) {
                 ValidationError(text: "Geçersiz parola girdiniz.")
